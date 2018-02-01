@@ -5,6 +5,7 @@ import org.usfirst.frc.team6957.robot.Robot;
 import org.usfirst.frc.team6957.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetElevatorClimb extends Command {
 	
 	private boolean status;
+	public String elevatorStatus = "Null";
 
     public SetElevatorClimb() {
         // Use requires() here to declare subsystem dependencies
@@ -26,20 +28,23 @@ public class SetElevatorClimb extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (Robot.elevator.elevatorHigh()==false && (Robot.elevator.elevatorLow() || Robot.elevator.elevatorSwitch() ==true )) {
-    		Robot.elevator.elevatorUpDown(RobotMap.elevatorspeed);
+    	if (!Robot.elevator.elevatorHigh() && (Robot.elevator.elevatorLow() || Robot.elevator.elevatorSwitch())) {
+    		while (!Robot.elevator.elevatorHigh()) {
+    			Robot.elevator.elevatorUpDown(RobotMap.elevatorspeed);
+        		elevatorStatus = "Climbing";
+    		}
     	}
     		
-    	else if (Robot.elevator.elevatorHigh()==true && Robot.elevator.elevatorLow() ==false && Robot.elevator.elevatorSwitch() == false) {
-    		System.out.println("The elevator is ready to climb!");
+    	else if (Robot.elevator.elevatorHigh() && !Robot.elevator.elevatorLow() && !Robot.elevator.elevatorSwitch()) {
     		Robot.elevator.stopElevator();
     		status = true;
+    		elevatorStatus = "Stopped";
     	}
     		    			
     	else {
-    		System.out.println("Somethings is not right");
     		Robot.elevator.stopElevator();
     		status = true;
+    		elevatorStatus = "Error";
 		}
     			
     }
@@ -54,4 +59,8 @@ public class SetElevatorClimb extends Command {
     	Robot.elevator.stopElevator();
     }
 
+    protected void interrupted() {
+    	Robot.elevator.stopElevator();
+    }
+    
 }

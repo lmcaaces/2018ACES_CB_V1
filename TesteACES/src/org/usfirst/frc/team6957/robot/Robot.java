@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Elevator elevator;
 	public static Intake intake;
+	public DashboardData dData = new DashboardData();
 	
 	public String teste;
 	
@@ -41,14 +42,6 @@ public class Robot extends IterativeRobot {
 		elevator = new Elevator();
 		intake = new Intake();
 		oi = new OI();
-		
-		SmartDashboard.putBoolean("Cube all the way in: ", Robot.intake.cubeInside());
-		SmartDashboard.putBoolean("Lowest Level: ", Robot.elevator.elevatorLow());
-		SmartDashboard.putBoolean("Highest Level: ", Robot.elevator.elevatorHigh());
-		SmartDashboard.putBoolean("Switch Level: ", Robot.elevator.elevatorSwitch());
-		SmartDashboard.putNumber("Right Encoder Distance: ", 0);
-		SmartDashboard.putNumber("Left Encoder Distance: ", 0);
-		
 	}
 	
 	@Override
@@ -88,6 +81,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		drivetrain.driveAsArcade();
 		elevator.movingElevator();
+		dData.TeleopDash();
+		
+		
 	}
 
 	/**

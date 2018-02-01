@@ -18,7 +18,7 @@ public class RobotMap {
 	public static double drivespeed = 1.0; // Setting speed limit for the drive train
 	public static double collectcube = 0.3; // Setting speed limit for the intake when collecting
 	public static double ejectcube = - 0.5; // Setting speed limit for the intake when ejecting
-	public static double elevatorspeed = 1.0; // Setting speed limit for the elevator 
+	public static double elevatorspeed = 0.3; // Setting speed limit for the elevator 
 	
 	public static double diameterWheel = 6.0; // Diameter of wheel used in the drive train in inches
 	public static double circumferenceWheel = diameterWheel*Math.PI;// Circumference of the wheel used in the drive train in inches

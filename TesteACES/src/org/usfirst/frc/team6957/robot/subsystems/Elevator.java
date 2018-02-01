@@ -42,18 +42,18 @@ public class Elevator extends Subsystem {
 	
 	public boolean elevatorLow() {
 		// Is the elevator in the lowest level?
-		return levelLowest.get(); // Return 1 for Yes or 0 for No
+		return !levelLowest.get(); // Return 1 for Yes or 0 for No
 		
 	}
 	
 	public boolean elevatorHigh() {
 		// Is the elevator in the highest level?
-		return levelHighest.get(); // Return 1 for Yes or 0 for No
+		return !levelHighest.get(); // Return 1 for Yes or 0 for No
 	}
 	
 	public boolean elevatorSwitch() {
 		// Is the elevator in the switch level?
-		return levelSwitch.get(); // Return 1 for Yes or 0 for No
+		return !levelSwitch.get(); // Return 1 for Yes or 0 for No
 	}
 	
 	public void elevatorUpDown(double speed){

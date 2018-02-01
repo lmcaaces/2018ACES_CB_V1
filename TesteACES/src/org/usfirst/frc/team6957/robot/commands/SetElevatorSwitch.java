@@ -25,7 +25,9 @@ public class SetElevatorSwitch extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (Robot.elevator.elevatorSwitch()==false && Robot.elevator.elevatorLow() == true && Robot.elevator.elevatorHigh() == false) {     		
-    		Robot.elevator.elevatorUpDown(RobotMap.elevatorspeed);
+    		while (!Robot.elevator.elevatorSwitch()) {
+    			Robot.elevator.elevatorUpDown(RobotMap.elevatorspeed);
+    		}
     	}
     		
     	else if (Robot.elevator.elevatorSwitch()==true && Robot.elevator.elevatorLow() == false && Robot.elevator.elevatorSwitch() == false) {
@@ -35,7 +37,9 @@ public class SetElevatorSwitch extends Command {
     	}
     	
     	else if (Robot.elevator.elevatorSwitch()==false && Robot.elevator.elevatorLow() == false && Robot.elevator.elevatorHigh() == true) {
-    		Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);
+    		while (!Robot.elevator.elevatorSwitch()) {
+    			Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);
+    		}
     	}
     	
     	else {
@@ -52,6 +56,10 @@ public class SetElevatorSwitch extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.elevator.stopElevator();
+    }
+    
+    protected void interrupted() {
     	Robot.elevator.stopElevator();
     }
 

@@ -26,7 +26,9 @@ public class SetElevatorPickup extends Command {
     protected void execute() {
     	
     	if (Robot.elevator.elevatorLow()==false && (Robot.elevator.elevatorHigh() ==true || Robot.elevator.elevatorSwitch() ==true )) {     		
-    		Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);    		
+    		while (!Robot.elevator.elevatorLow()) {
+    			Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);
+    		}
     	}
     		
     	else if (Robot.elevator.elevatorLow()==true && Robot.elevator.elevatorHigh() ==false && Robot.elevator.elevatorSwitch() == false) { 
@@ -52,4 +54,8 @@ public class SetElevatorPickup extends Command {
     	Robot.elevator.stopElevator();
     }
 
+    protected void interrupted() {
+    	Robot.elevator.stopElevator();
+    }
+    
 }
