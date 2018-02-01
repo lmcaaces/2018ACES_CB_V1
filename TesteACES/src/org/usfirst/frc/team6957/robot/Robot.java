@@ -28,6 +28,8 @@ public class Robot extends IterativeRobot {
 	public static Elevator elevator;
 	public static Intake intake;
 	
+	public String teste;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
