@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.Robot;
 import org.usfirst.frc.team6957.robot.RobotMap;
 
@@ -27,7 +28,7 @@ public class SetElevatorPickup extends Command {
     	
     	if (Robot.elevator.elevatorLow()==false && (Robot.elevator.elevatorHigh() ==true || Robot.elevator.elevatorSwitch() ==true )) {     		
     		while (!Robot.elevator.elevatorLow()) {
-    			Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);
+    			Robot.elevator.elevatorUpDown(-DashboardData.elevatorspeed);
     		}
     	}
     		

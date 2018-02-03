@@ -1,11 +1,11 @@
 package org.usfirst.frc.team6957.robot.commands;
 
 
+import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.Robot;
 import org.usfirst.frc.team6957.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -30,7 +30,7 @@ public class SetElevatorClimb extends Command {
     	
     	if (!Robot.elevator.elevatorHigh() && (Robot.elevator.elevatorLow() || Robot.elevator.elevatorSwitch())) {
     		while (!Robot.elevator.elevatorHigh()) {
-    			Robot.elevator.elevatorUpDown(RobotMap.elevatorspeed);
+    			Robot.elevator.elevatorUpDown(DashboardData.elevatorspeed);
         		elevatorStatus = "Climbing";
     		}
     	}

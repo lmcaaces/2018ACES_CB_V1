@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team6957.robot.subsystems;
 
+import org.usfirst.frc.team6957.robot.commands.StopElevator;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -46,7 +48,6 @@ public class Intake extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new StopElevator());
 	}
 }

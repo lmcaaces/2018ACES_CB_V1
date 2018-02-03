@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.Robot;
 import org.usfirst.frc.team6957.robot.RobotMap;
 
@@ -28,7 +29,7 @@ public class ElevatorDown extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);
+		Robot.elevator.elevatorUpDown(-DashboardData.elevatorspeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

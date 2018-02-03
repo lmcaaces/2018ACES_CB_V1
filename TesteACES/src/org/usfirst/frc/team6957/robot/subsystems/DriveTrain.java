@@ -8,11 +8,14 @@
 package org.usfirst.frc.team6957.robot.subsystems;
 
 import org.usfirst.frc.team6957.robot.OI;
+import org.usfirst.frc.team6957.robot.Robot;
 import org.usfirst.frc.team6957.robot.RobotMap;
+import org.usfirst.frc.team6957.robot.DashboardData;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -25,10 +28,10 @@ public class DriveTrain extends Subsystem {
 	
 	private SpeedController rightTank = new Spark(0);
 	private SpeedController leftTank = new Spark(1);
-	private DifferentialDrive tankDrive = new DifferentialDrive(leftTank, rightTank);
+	public DifferentialDrive tankDrive = new DifferentialDrive(leftTank, rightTank);
 	
-	private Encoder encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-	private Encoder encRight = new Encoder (2, 3, false, Encoder.EncodingType.k4X);
+	public Encoder encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+	public Encoder encRight = new Encoder (2, 3, false, Encoder.EncodingType.k4X);
 	
 	public DriveTrain() {
 		// Put everything to the LiveWindow for testing.
@@ -41,12 +44,12 @@ public class DriveTrain extends Subsystem {
 	
 	public void setEncParameter() {
 		encRight.setMinRate(1);
-		encRight.setDistancePerPulse(0.01);
+		encRight.setDistancePerPulse(DashboardData.rdistPulse);
 		encRight.setReverseDirection(true);
 		encRight.setSamplesToAverage(5);
 		encLeft.setMinRate(1);
-		encLeft.setDistancePerPulse(0.01);
-		encLeft.setReverseDirection(true);
+		encLeft.setDistancePerPulse(DashboardData.ldistPulse);
+		encLeft.setReverseDirection(false);
 		encLeft.setSamplesToAverage(7);
 	}
 	
@@ -55,12 +58,12 @@ public class DriveTrain extends Subsystem {
 		encLeft.reset();
 	}
 	
-	public void driveAsTank() {
-		tankDrive.tankDrive((OI.driver.getRawAxis(1)*RobotMap.drivespeed), (OI.driver.getRawAxis(5)*RobotMap.drivespeed));		
+	public void driveAsTank(XboxController Xbox) {
+		tankDrive.tankDrive((Xbox.getRawAxis(1)*DashboardData.drivespeed), (Xbox.getRawAxis(5)*DashboardData.drivespeed));		
 	}
 	
-	public void driveAsArcade() {
-		tankDrive.arcadeDrive((OI.driver.getRawAxis(1)*RobotMap.drivespeed), (OI.driver.getRawAxis(4)*RobotMap.drivespeed));
+	public void driveAsArcade(XboxController Xbox) {
+		tankDrive.arcadeDrive((Xbox.getRawAxis(1)*DashboardData.drivespeed), (Xbox.getRawAxis(4)*DashboardData.drivespeed));
 	}
 	
 	public void stopDriveTrain() {

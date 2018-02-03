@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.Robot;
 import org.usfirst.frc.team6957.robot.RobotMap;
 
@@ -26,7 +27,7 @@ public class SetElevatorSwitch extends Command {
     protected void execute() {
     	if (Robot.elevator.elevatorSwitch()==false && Robot.elevator.elevatorLow() == true && Robot.elevator.elevatorHigh() == false) {     		
     		while (!Robot.elevator.elevatorSwitch()) {
-    			Robot.elevator.elevatorUpDown(RobotMap.elevatorspeed);
+    			Robot.elevator.elevatorUpDown(DashboardData.elevatorspeed);
     		}
     	}
     		
@@ -38,7 +39,7 @@ public class SetElevatorSwitch extends Command {
     	
     	else if (Robot.elevator.elevatorSwitch()==false && Robot.elevator.elevatorLow() == false && Robot.elevator.elevatorHigh() == true) {
     		while (!Robot.elevator.elevatorSwitch()) {
-    			Robot.elevator.elevatorUpDown(-RobotMap.elevatorspeed);
+    			Robot.elevator.elevatorUpDown(-DashboardData.elevatorspeed);
     		}
     	}
     	

@@ -14,17 +14,20 @@ package org.usfirst.frc.team6957.robot;
  * floating around.
  */
 public class RobotMap {
+	//public static double drivespeed; // Setting speed limit for the drive train
+	//public static double collectcube; // Setting speed limit for the intake when collecting
+	//public static double ejectcube; // Setting speed limit for the intake when ejecting
+	//public static double elevatorspeed; // Setting speed limit for the elevator 
 	
-	public static double drivespeed = 1.0; // Setting speed limit for the drive train
-	public static double collectcube = 0.3; // Setting speed limit for the intake when collecting
-	public static double ejectcube = - 0.5; // Setting speed limit for the intake when ejecting
-	public static double elevatorspeed = 0.3; // Setting speed limit for the elevator 
+	//public static double diameterWheel; // Diameter of wheel used in the drive train in inches
+	//public static double circumferenceWheel;// Circumference of the wheel used in the drive train in inches
+	//public static double lmaxEncpulses; // Max pulses per Encoder
+	//public static double ldistPulse; // Distance pulse in inches
+	//public static double rmaxEncpulses; // Max pulses per Encoder
+	//public static double rdistPulse; // Distance pulse in inches
 	
-	public static double diameterWheel = 6.0; // Diameter of wheel used in the drive train in inches
-	public static double circumferenceWheel = diameterWheel*Math.PI;// Circumference of the wheel used in the drive train in inches
-	public static double maxEncpulses = 0; // Max pulses per Encoder
-	public static double distPulse = circumferenceWheel / maxEncpulses; // Distance pulse in inches
-
 	//Autonomous Variables
-	public static double shootauto = 0.8; // Setting speed for the intake when scoring in autonomous
+	//public static double shootauto; // Setting speed for the intake when scoring in autonomous
+	
+	//public static double leftdriveinhibitor;
 }

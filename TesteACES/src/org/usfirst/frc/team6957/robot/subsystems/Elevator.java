@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team6957.robot.subsystems;
 
+import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.OI;
 import org.usfirst.frc.team6957.robot.RobotMap;
 
@@ -62,8 +63,8 @@ public class Elevator extends Subsystem {
 	}
 	
 	public void movingElevator() {
-		elevatorRight.set(OI.operator.getRawAxis(1)*RobotMap.elevatorspeed); // Right motor running at determined value
-		elevatorLeft.set(OI.operator.getRawAxis(1)*RobotMap.elevatorspeed);	// Left motor running at determined value
+		elevatorRight.set(OI.operator.getRawAxis(1)*DashboardData.elevatorspeed); // Right motor running at determined value
+		elevatorLeft.set(OI.operator.getRawAxis(1)*DashboardData.elevatorspeed);	// Left motor running at determined value
 	}
 	
 	public void stopElevator() {
