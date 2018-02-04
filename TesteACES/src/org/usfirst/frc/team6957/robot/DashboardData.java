@@ -64,7 +64,7 @@ public class DashboardData {
 		driveMode = prefs.getInt("Drive Mode", 0);
 		drivespeed = (prefs.getDouble("Drive Speed", 100) * .01);
 		collectcube = (prefs.getDouble("Collect Cube Speed", 60) * .01);
-		ejectcube = (prefs.getDouble("Eject Cube Speed", 100) * .01);
+		ejectcube = (prefs.getDouble("Eject Cube Speed", 100) * -.01);
 		elevatorspeed = (prefs.getDouble("Elevator Speed", 50) * .01);
 		diameterWheel = prefs.getDouble("Diameter Wheel Size", 6.0);
 		lmaxEncpulses = prefs.getDouble("Max Pulses for Left Encoder", 0);

@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team6957.robot.subsystems;
 
-import org.usfirst.frc.team6957.robot.commands.StopElevator;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
@@ -38,7 +37,7 @@ public class Intake extends Subsystem {
 	}
 	
 	public void startIntake(double speed) {
-		intakeRight.set(speed); // Set speed right motor determined value
+		intakeRight.set(-speed); // Set speed right motor determined value
 		intakeLeft.set(speed); // Set speed left motor determined value
 	}
 	
@@ -48,6 +47,6 @@ public class Intake extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new StopElevator());
+		//setDefaultCommand(new StopElevator());
 	}
 }

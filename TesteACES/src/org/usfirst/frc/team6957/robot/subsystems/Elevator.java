@@ -8,12 +8,12 @@
 package org.usfirst.frc.team6957.robot.subsystems;
 
 import org.usfirst.frc.team6957.robot.DashboardData;
-import org.usfirst.frc.team6957.robot.OI;
-import org.usfirst.frc.team6957.robot.RobotMap;
+import org.usfirst.frc.team6957.robot.commands.ElevatorControlWithJoystick;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -62,9 +62,9 @@ public class Elevator extends Subsystem {
 		elevatorLeft.set(speed);
 	}
 	
-	public void movingElevator() {
-		elevatorRight.set(OI.operator.getRawAxis(1)*DashboardData.elevatorspeed); // Right motor running at determined value
-		elevatorLeft.set(OI.operator.getRawAxis(1)*DashboardData.elevatorspeed);	// Left motor running at determined value
+	public void movingElevator(XboxController Xbox) {
+		elevatorRight.set(Xbox.getRawAxis(1)*DashboardData.elevatorspeed); // Right motor running at determined value
+		elevatorLeft.set(Xbox.getRawAxis(1)*DashboardData.elevatorspeed);	// Left motor running at determined value
 	}
 	
 	public void stopElevator() {
@@ -74,6 +74,6 @@ public class Elevator extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new ElevatorControlWithJoystick());
 	}
 }

@@ -24,8 +24,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 		
-	public static final XboxController driver = new XboxController(0);
-	public static final XboxController operator = new XboxController(1);
+	public static XboxController driver = new XboxController(0);
+	public static XboxController operator = new XboxController(1);
 	
 	public OI(){
 		

@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ArcadeDriveWithJoystick extends Command {
-	public ArcadeDriveWithJoystick() {
-        requires(Robot.drivetrain);
+public class ElevatorControlWithJoystick extends Command {
+	public ElevatorControlWithJoystick() {
+        requires(Robot.elevator);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveAsArcade(Robot.oi.getDriver());
+    	Robot.elevator.movingElevator(Robot.oi.getOperator());
     }
 
     // Make this return true when this Command no longer needs to run execute()

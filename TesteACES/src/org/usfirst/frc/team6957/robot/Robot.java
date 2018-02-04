@@ -86,12 +86,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
 		
-		//Calls the drive function
-		drivetrain.driveAsArcade();
-		
-		//Calls the elevator function
-		elevator.movingElevator();
-		
 		//TEMP Resets Encoders and checks for any new params
 		if (OI.driver.getAButton()) {
 			drivetrain.resetEncoders();

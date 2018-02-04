@@ -7,10 +7,8 @@
 
 package org.usfirst.frc.team6957.robot.subsystems;
 
-import org.usfirst.frc.team6957.robot.OI;
-import org.usfirst.frc.team6957.robot.Robot;
-import org.usfirst.frc.team6957.robot.RobotMap;
 import org.usfirst.frc.team6957.robot.DashboardData;
+import org.usfirst.frc.team6957.robot.commands.ArcadeDriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
@@ -28,7 +26,9 @@ public class DriveTrain extends Subsystem {
 	
 	private SpeedController rightTank = new Spark(0);
 	private SpeedController leftTank = new Spark(1);
-	public DifferentialDrive tankDrive = new DifferentialDrive(leftTank, rightTank);
+	
+	public DifferentialDrive tankDrive
+			= new DifferentialDrive(leftTank, rightTank);
 	
 	public Encoder encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	public Encoder encRight = new Encoder (2, 3, false, Encoder.EncodingType.k4X);
@@ -72,8 +72,6 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-		
+		setDefaultCommand(new ArcadeDriveWithJoystick());
 	}
 }
