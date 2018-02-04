@@ -21,18 +21,26 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * project.
  */
 public class Robot extends IterativeRobot {
-	
+//Instantiations//
 	//Instantiates the subsystems
+	/**DriveTrain Subsystem*/
 	public static DriveTrain drivetrain = new DriveTrain();
+	/**Elevator Subsystem*/
 	public static Elevator elevator = new Elevator();
+	/**Intake Subsystem*/
 	public static Intake intake = new Intake();
 	
 	//Instantiates the OI & SmartDashboard-SD (DashboardData class)
+	/**Operator Input*/
 	public static OI oi = new OI();
+	/**SmartDashboard*/
 	public DashboardData SD = new DashboardData();
 	
-	/**This function is run when the robot is first started up and should be
-	   used for any initialization code.*/
+	
+//Main Programs//
+	/**
+	This function is run when the robot is first started up and should be used for any initialization code.
+	*/
 	@Override
 	public void robotInit() {
 	}
@@ -49,13 +57,15 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		//AutonomousCommand.start();
+		//AutonomousCommand.start(); //Strts Autonomous Command
 		
 		//Resets encoders when autonomous is enabled
 		drivetrain.resetEncoders();
 	}
 
-	/**This function is called periodically during autonomous.*/
+	/**
+	This function is called periodically during autonomous.
+	*/
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -77,10 +87,12 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		//AutonomousCommand.cancel();
+		//AutonomousCommand.cancel(); //Ensures that the Autonomous is stopped
 	}
 
-	/**This function is called periodically during operator control.*/
+	/**
+	This function is called periodically during operator control.
+	*/
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -94,7 +106,9 @@ public class Robot extends IterativeRobot {
 			
 	}
 
-	/**This function is called periodically during test mode.*/
+	/**
+	This function is called periodically during test mode.
+	*/
 	@Override
 	public void testPeriodic() {
 	}

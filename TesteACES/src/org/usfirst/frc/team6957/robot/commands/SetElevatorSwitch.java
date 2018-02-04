@@ -24,25 +24,18 @@ public class SetElevatorSwitch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.elevator.elevatorSwitch()==false && Robot.elevator.elevatorLow() == true && Robot.elevator.elevatorHigh() == false) {     		
+    	if (!Robot.elevator.elevatorSwitch() && Robot.elevator.elevatorLow() && !Robot.elevator.elevatorHigh()) {     		
     		while (!Robot.elevator.elevatorSwitch()) {
     			Robot.elevator.elevatorUpDown(DashboardData.elevatorspeed);
     		}
-    	}
-    		
-    	else if (Robot.elevator.elevatorSwitch()==true && Robot.elevator.elevatorLow() == false && Robot.elevator.elevatorSwitch() == false) {
-    		System.out.println("The elevator is ready to score!");
+    	} else if (Robot.elevator.elevatorSwitch() && !Robot.elevator.elevatorLow() && !Robot.elevator.elevatorSwitch()) {
     		Robot.elevator.stopElevator();
     		status = true;
-    	}
-    	
-    	else if (Robot.elevator.elevatorSwitch()==false && Robot.elevator.elevatorLow() == false && Robot.elevator.elevatorHigh() == true) {
+    	} else if (!Robot.elevator.elevatorSwitch() && !Robot.elevator.elevatorLow() && Robot.elevator.elevatorHigh()) {
     		while (!Robot.elevator.elevatorSwitch()) {
     			Robot.elevator.elevatorUpDown(-DashboardData.elevatorspeed);
     		}
-    	}
-    	
-    	else {
+    	} else {
     		System.out.println("Somethings is not right");
     		Robot.elevator.stopElevator();
     		status = true;
@@ -59,6 +52,7 @@ public class SetElevatorSwitch extends Command {
     	Robot.elevator.stopElevator();
     }
     
+    // Called if another command uses the elevator subsystem
     protected void interrupted() {
     	Robot.elevator.stopElevator();
     }

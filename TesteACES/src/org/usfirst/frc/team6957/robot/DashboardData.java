@@ -23,41 +23,54 @@ public class DashboardData {
 	
 	
 	
-	/**Constructor for DashboardData*/
-	public DashboardData() {
-	}
+	/**
+	Constructor for DashboardData
+	*/
+	public DashboardData() {}
 	
-	/**Displays information for disabled periodic*/
+	/**
+	Displays information for disabled periodic
+	*/
 	public void DisabledDash() {
 		UniversalDash();
 		RobotSettings();
 	}
 	
-	/**Displays information for autonomous periodic*/
+	/**
+	Displays information for autonomous periodic
+	*/
 	public void AutonomousDash() {
 		UniversalDash();
 	}
 	
-	/**Displays information for teleop periodic*/
+	/**
+	Displays information for teleop periodic
+	*/
 	public void TeleopDash() {
 		UniversalDash();
 		CheckRobotSettings();
 	}
 	
-	/**Universal Dashboard information*/
+	/**
+	Universal Dashboard information
+	*/
 	public void UniversalDash() {
 		EncoderData();
 		ElevatorData();
 	}
 	
-	/**Checks for updated robot setting by pushing the start button in teleop*/
+	/**
+	Checks for updated robot setting by pushing the start button in teleop
+	*/
 	public void CheckRobotSettings() {
 		if (OI.driver.getStartButton() || OI.operator.getStartButton()) {
 			RobotSettings();
 		}
 	}
 	
-	/**Gets user input from smartdashboard*/
+	/**
+	Gets user input from SmartDashboard
+	*/
 	public void RobotSettings() {
 		prefs = Preferences.getInstance();
 		//autonomousMode = prefs.getInt("Autonomous Mode", 0);
@@ -73,53 +86,12 @@ public class DashboardData {
 		ldistPulse = circumferenceWheel / lmaxEncpulses;
 		rdistPulse = circumferenceWheel / rmaxEncpulses;
 		
-		
 		shootauto = (prefs.getDouble("DriveSpeed", 100) * .01);
-		
-		
-		//DELETE AFTER VERIFYING ROBOT MAP
-		//RobotMap.drivespeed = DashboardData.SDdrivespeed; // Setting speed limit for the drive train
-		//RobotMap.leftdriveinhibitor = DashboardData.SDleftdriveinhibitor;
-		//RobotMap.collectcube = DashboardData.SDcollectcube; // Setting speed limit for the intake when collecting
-		//RobotMap.ejectcube = - DashboardData.SDejectcube; // Setting speed limit for the intake when ejecting
-		//RobotMap.elevatorspeed = DashboardData.SDelevatorspeed; // Setting speed limit for the elevator 
-		//RobotMap.diameterWheel = DashboardData.SDdiameterWheel; // Diameter of wheel used in the drive train in inches
-		//RobotMap.circumferenceWheel = RobotMap.diameterWheel*Math.PI;// Circumference of the wheel used in the drive train in inches
-		//RobotMap.lmaxEncpulses = DashboardData.SDlmaxEncpulses; // Max pulses for LEncoder
-		//RobotMap.rmaxEncpulses = DashboardData.SDrmaxEncpulses; // Max pulses for REncoder
-		//RobotMap.ldistPulse = RobotMap.circumferenceWheel / RobotMap.lmaxEncpulses; // Distance pulse in inches
-		//RobotMap.rdistPulse = RobotMap.circumferenceWheel / RobotMap.rmaxEncpulses; // Distance pulse in inches
-		//Autonomous Variables
-		//RobotMap.shootauto = 0.8; // Setting speed for the intake when scoring in autonomous
 	}
-	
-	/*
-	/**Changes drive type based on driveMode variable/
-	public void RobotDriveMode() {
-		if (driveMode == 1) {
-			//Arcade Drive
-		} else if (driveMode == 2) {
-			//Tank Drive
-		} else {
-			//Stop Motor
-		}
-	}
+
+	/**
+	Displays Encoder Data
 	*/
-	
-	/*
-	/**Changes autonomous type based on autonomousMode variable/
-	public void RobotAutonomousMode() {
-		if (autonomousMode == 1) {
-			//Example Autonomous Code
-		} else if (autonomousMode == 2) {
-			//Example Autonomous Code
-		} else {
-			//Stop Motor
-		}
-	}
-	*/
-	
-	/**Displays Encoder Data*/
 	public void EncoderData() {
 		//Left Encoder Data
 		SmartDashboard.putNumber(
@@ -150,12 +122,23 @@ public class DashboardData {
 				"RENC Stopped", Robot.drivetrain.encRight.getStopped());
 	}
 	
-	/**Displays Elevator Data*/
+	/**
+	Displays Elevator Data
+	*/
 	public void ElevatorData() {
 		SmartDashboard.putBoolean(
 				"Elevator is High", Robot.elevator.elevatorHigh());
 		SmartDashboard.putBoolean(
+				"Elevator is in the Middle", Robot.elevator.elevatorSwitch());
+		SmartDashboard.putBoolean(
 				"Elevator is Low", Robot.elevator.elevatorLow());
+	}
+	
+	/**
+	Displays Intake Data
+	*/
+	public void IntakeData() {
+		//Put Intake Data In Here
 	}
 	
 }
