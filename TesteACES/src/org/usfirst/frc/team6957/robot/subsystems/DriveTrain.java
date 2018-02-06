@@ -8,9 +8,7 @@
 package org.usfirst.frc.team6957.robot.subsystems;
 
 import org.usfirst.frc.team6957.robot.DashboardData;
-import org.usfirst.frc.team6957.robot.commands.ArcadeDriveWithJoystick;
-import org.usfirst.frc.team6957.robot.commands.StopDriveTrain;
-import org.usfirst.frc.team6957.robot.commands.TankDriveWithJoystick;
+import org.usfirst.frc.team6957.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
@@ -39,8 +37,7 @@ public class DriveTrain extends Subsystem {
 	/**
 	Constructor for DriveTrain
 	*/
-	public DriveTrain() {	
-	}
+	public DriveTrain() {}
 	
 	/**
 	Sets the Encoder Parameters
@@ -49,11 +46,11 @@ public class DriveTrain extends Subsystem {
 	public void setEncParameter() {
 		encRight.setMinRate(1);
 		encRight.setDistancePerPulse(DashboardData.rdistPulse);
-		encRight.setReverseDirection(true);
+		encRight.setReverseDirection(false);
 		encRight.setSamplesToAverage(5);
 		encLeft.setMinRate(1);
 		encLeft.setDistancePerPulse(DashboardData.ldistPulse);
-		encLeft.setReverseDirection(false);
+		encLeft.setReverseDirection(true);
 		encLeft.setSamplesToAverage(7);
 	}
 	
@@ -96,15 +93,6 @@ public class DriveTrain extends Subsystem {
 	@see edu.wpi.first.wpilibj.command.Subsystem#initDefaultCommand()
 	*/
 	public void initDefaultCommand() {
-		if (DashboardData.driveMode == 1) {
-			//Arcade Drive
-			setDefaultCommand(new ArcadeDriveWithJoystick());
-		} else if (DashboardData.driveMode == 2) {
-			//Tank Drive
-			setDefaultCommand(new TankDriveWithJoystick());
-		} else {
-			//Stops Motor
-			setDefaultCommand(new StopDriveTrain());
-		}
+		setDefaultCommand(new DriveWithJoystick());
 	}
 }

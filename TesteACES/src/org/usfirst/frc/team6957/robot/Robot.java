@@ -12,6 +12,7 @@ import org.usfirst.frc.team6957.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6957.robot.subsystems.Elevator;
 import org.usfirst.frc.team6957.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -75,13 +76,33 @@ public class Robot extends IterativeRobot {
 		double encL = Robot.drivetrain.encLeft.getDistance();
 		double encR = Robot.drivetrain.encRight.getDistance();
 		if (encL <= (12*5) && encR <= (12*5) && encL == encR) {
-			Robot.drivetrain.tankDrive.arcadeDrive(0.6, 0.0);
+			while (encL <= (12*5) && encR <= (12*5) && encL == encR) {
+				Robot.drivetrain.tankDrive.arcadeDrive(0.6, 0.0);
+				SD.AutonomousDash();
+				encL = Robot.drivetrain.encLeft.getDistance();
+				encR = Robot.drivetrain.encRight.getDistance();
+			}
 		} else if (encL <= (12*5) && encR <= (12*5) && encL < encR){
-			Robot.drivetrain.tankDrive.arcadeDrive(0.6, 0.4);
+			while (encL <= (12*5) && encR <= (12*5) && encL < encR) {
+				Robot.drivetrain.tankDrive.arcadeDrive(-0.6, 0.4);
+				SD.AutonomousDash();
+				encL = Robot.drivetrain.encLeft.getDistance();
+				encR = Robot.drivetrain.encRight.getDistance();
+			}
 		} else if (encL <= (12*5) && encR <= (12*5) && encL > encR) {
-			Robot.drivetrain.tankDrive.arcadeDrive(0.6, -0.4);
+			while (encL <= (12*5) && encR <= (12*5) && encL > encR) {
+				Robot.drivetrain.tankDrive.arcadeDrive(-0.6, -0.4);
+				SD.AutonomousDash();
+				encL = Robot.drivetrain.encLeft.getDistance();
+				encR = Robot.drivetrain.encRight.getDistance();
+			}
+		} else if (encL < 0  || encR < 0) {
+			Robot.drivetrain.stopDriveTrain();
+			SD.AutonomousDash();
+			encL = Robot.drivetrain.encLeft.getDistance();
+			encR = Robot.drivetrain.encRight.getDistance();
 		} else {
-			Robot.drivetrain.tankDrive.stopMotor();
+			Robot.drivetrain.stopDriveTrain();
 		}
 	}
 
@@ -97,7 +118,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
-		
+		SmartDashboard.putNumber("Left Y Axis", OI.driver.getRawAxis(1));
+		SmartDashboard.putNumber("Right Y Axis", OI.driver.getRawAxis(5));
+		SmartDashboard.putNumber("Right X Axis", OI.driver.getRawAxis(4));
 		//TEMP Resets Encoders and checks for any new params
 		if (OI.driver.getAButton()) {
 			drivetrain.resetEncoders();
