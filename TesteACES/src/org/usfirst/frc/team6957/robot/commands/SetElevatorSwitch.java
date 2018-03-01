@@ -36,9 +36,9 @@ public class SetElevatorSwitch extends Command {
     			Robot.elevator.elevatorUpDown(-DashboardData.elevatorspeed);
     		}
     	} else {
-    		System.out.println("Somethings is not right");
     		Robot.elevator.stopElevator();
     		status = true;
+    		DashboardData.AddGameError("Elevator move to Switch Failed");
 		}
     }
 

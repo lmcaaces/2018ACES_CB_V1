@@ -27,20 +27,18 @@ public class SetElevatorPickup extends Command {
     	
     	if (Robot.elevator.elevatorLow()==false && (Robot.elevator.elevatorHigh() ==true || Robot.elevator.elevatorSwitch() ==true )) {     		
     		while (!Robot.elevator.elevatorLow()) {
-    			Robot.elevator.elevatorUpDown(-DashboardData.elevatorspeed);
     		}
     	}
     		
     	else if (Robot.elevator.elevatorLow()==true && Robot.elevator.elevatorHigh() ==false && Robot.elevator.elevatorSwitch() == false) { 
-    		System.out.println("The elevator is ready to pickup the cube!");
     		Robot.elevator.stopElevator();
     		status = true;
     	}
     		    			
     	else {
-    		System.out.println("Somethings is not right");
     		Robot.elevator.stopElevator();
     		status = true;
+    		DashboardData.AddGameError("Elevator move to Pickup Failed");
 		}
     }
 

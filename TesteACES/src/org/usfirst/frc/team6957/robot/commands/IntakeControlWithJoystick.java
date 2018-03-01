@@ -1,15 +1,17 @@
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+Controls intake with triggers
  */
-public class AutoTurn90 extends Command {
+public class IntakeControlWithJoystick extends Command {
 
-    public AutoTurn90() {
+    public IntakeControlWithJoystick() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +20,7 @@ public class AutoTurn90 extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.intakeAnalog(Robot.oi.getOperator());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -27,6 +30,7 @@ public class AutoTurn90 extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.intake.stopIntake();
     }
 
     // Called when another command which requires one or more of the same

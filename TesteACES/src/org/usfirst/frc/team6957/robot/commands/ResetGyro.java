@@ -7,23 +7,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ArcadeDriveWithJoystick extends Command {
-	public ArcadeDriveWithJoystick() {
+public class ResetGyro extends Command {
+
+	private boolean finished;
+	
+    public ResetGyro() {
         requires(Robot.drivetrain);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveAsArcade(Robot.oi.getDriver());
+    	Robot.drivetrain.ResetGyro();
+    	finished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.drivetrain.stopDriveTrain();
+        return finished;
     }
 }

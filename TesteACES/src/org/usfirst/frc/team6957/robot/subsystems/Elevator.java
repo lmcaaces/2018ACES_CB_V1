@@ -10,7 +10,9 @@ package org.usfirst.frc.team6957.robot.subsystems;
 import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.commands.ElevatorControlWithJoystick;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.XboxController;
@@ -26,9 +28,9 @@ public class Elevator extends Subsystem {
 	private SpeedController elevatorLeft = new Spark(5);
 	
 	//Instantiates Elevator Sensors/Switches
-	private DigitalInput levelLowest = new DigitalInput(5);
-	private DigitalInput levelHighest = new DigitalInput(6);
-	private DigitalInput levelSwitch = new DigitalInput(7);
+	private DigitalInput lowSensor = new DigitalInput(4);
+	private DigitalInput highSensor = new DigitalInput(5);
+	private DigitalInput switchSensor = new DigitalInput(6);
 	
 	public boolean lowestlevel;
 	public boolean highestlevel;
@@ -46,7 +48,7 @@ public class Elevator extends Subsystem {
 	*/
 	public boolean elevatorLow() {
 		// Is the elevator in the lowest level?
-		return !levelLowest.get(); // Return 1 for Yes or 0 for No
+		return !lowSensor.get(); // Return 1 for Yes or 0 for No
 		
 	}
 	
@@ -57,7 +59,7 @@ public class Elevator extends Subsystem {
 	*/
 	public boolean elevatorHigh() {
 		// Is the elevator in the highest level?
-		return !levelHighest.get(); // Return 1 for Yes or 0 for No
+		return !highSensor.get(); // Return 1 for Yes or 0 for No
 	}
 	
 	/**
@@ -67,7 +69,7 @@ public class Elevator extends Subsystem {
 	*/
 	public boolean elevatorSwitch() {
 		// Is the elevator in the switch level?
-		return !levelSwitch.get(); // Return 1 for Yes or 0 for No
+		return !switchSensor.get(); // Return 1 for Yes or 0 for No
 	}
 	
 	/**
@@ -85,9 +87,14 @@ public class Elevator extends Subsystem {
 	. Take one Parameter: Xbox Controller
 	@param Xbox
 	*/
-	public void movingElevator(XboxController Xbox) {
-		elevatorRight.set(Xbox.getRawAxis(1)*DashboardData.elevatorspeed); // Right motor running at determined value
-		elevatorLeft.set(Xbox.getRawAxis(1)*DashboardData.elevatorspeed);	// Left motor running at determined value
+	public void elevatorDownJoystick(XboxController Xbox) {
+		elevatorRight.set(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed)); // Right motor running at determined value
+		elevatorLeft.set(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed));	// Left motor running at determined value
+	}
+	
+	public void elevatorUpJoystick(XboxController Xbox) {
+		elevatorRight.set(-(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed))); // Right motor running at determined value
+		elevatorLeft.set(-(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed)));	// Left motor running at determined value
 	}
 	
 	/**

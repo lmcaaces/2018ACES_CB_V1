@@ -12,8 +12,8 @@ import org.usfirst.frc.team6957.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 /**
- * An example command.  You can replace me with your own command.
- */
+Moves Elevator Down
+*/
 public class ElevatorDown extends Command {
 	public ElevatorDown() {
 		// Use requires() here to declare subsystem dependencies

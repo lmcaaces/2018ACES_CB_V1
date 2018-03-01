@@ -13,7 +13,7 @@ import org.usfirst.frc.team6957.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * An example command.  You can replace me with your own command.
+Turns on Intake motors
  */
 public class CollectCube extends Command {
 	public CollectCube() {
@@ -42,5 +42,9 @@ public class CollectCube extends Command {
 	@Override
 	protected void end() {
 		Robot.intake.stopIntake();
+	}
+	
+	protected void interrupted() {
+		
 	}
 }

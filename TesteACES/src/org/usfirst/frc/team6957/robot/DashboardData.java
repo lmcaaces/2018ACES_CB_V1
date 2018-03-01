@@ -1,6 +1,17 @@
 package org.usfirst.frc.team6957.robot;
 
+import java.util.ArrayList;
+
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousCenter;
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousDefault;
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousLeft;
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousRight;
+import org.usfirst.frc.team6957.robot.subsystems.Intake;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardData {
@@ -8,20 +19,18 @@ public class DashboardData {
 	//Preference-UserInput Variables
 	public Preferences prefs;
 	public static int driveMode;
-	//public static int autonomousMode;
+	public static String autonomousMode;
 	public static double drivespeed;
 	public static double collectcube;
 	public static double ejectcube;
 	public static double elevatorspeed;
-	public static double diameterWheel;
-	public static double lmaxEncpulses;
-	public static double rmaxEncpulses;
 	public static double shootauto;
-	public static double circumferenceWheel;
-	public static double ldistPulse;
-	public static double rdistPulse;
-	
-	
+	public static double gyroKp;
+	public static SendableChooser<CommandGroup> autoMode = new SendableChooser<CommandGroup>();
+	public static ArrayList<String> autonomousMessages = new ArrayList<String>();
+	public static ArrayList<String> autonomousErrors = new ArrayList<String>();
+	public static ArrayList<String> teleopMessages = new ArrayList<String>();
+	public static ArrayList<String> teleopErrors = new ArrayList<String>();
 	
 	/**
 	Constructor for DashboardData
@@ -34,6 +43,8 @@ public class DashboardData {
 	public void DisabledDash() {
 		UniversalDash();
 		RobotSettings();
+		ClearMessages();
+		Robot.drivetrain.setEncParameter();
 	}
 	
 	/**
@@ -41,6 +52,7 @@ public class DashboardData {
 	*/
 	public void AutonomousDash() {
 		UniversalDash();
+		GetAutonomousMessages();
 	}
 	
 	/**
@@ -49,6 +61,7 @@ public class DashboardData {
 	public void TeleopDash() {
 		UniversalDash();
 		CheckRobotSettings();
+		GetTeleopMessages();
 	}
 	
 	/**
@@ -57,6 +70,7 @@ public class DashboardData {
 	public void UniversalDash() {
 		EncoderData();
 		ElevatorData();
+		GyroData();
 	}
 	
 	/**
@@ -73,53 +87,38 @@ public class DashboardData {
 	*/
 	public void RobotSettings() {
 		prefs = Preferences.getInstance();
-		//autonomousMode = prefs.getInt("Autonomous Mode", 0);
+		autonomousMode = prefs.getString("Autonomous Mode", "D");
 		driveMode = prefs.getInt("Drive Mode", 0);
 		drivespeed = (prefs.getDouble("Drive Speed", 100) * .01);
-		collectcube = (prefs.getDouble("Collect Cube Speed", 60) * .01);
-		ejectcube = (prefs.getDouble("Eject Cube Speed", 100) * -.01);
+		collectcube = (prefs.getDouble("Intake Speed", 60) * .01);
+		ejectcube = (prefs.getDouble("Outtake Speed", 100) * -.01);
 		elevatorspeed = (prefs.getDouble("Elevator Speed", 50) * .01);
-		diameterWheel = prefs.getDouble("Diameter Wheel Size", 6.0);
-		lmaxEncpulses = prefs.getDouble("Max Pulses for Left Encoder", 0);
-		rmaxEncpulses = prefs.getDouble("Max Pulses for Right Encoder", 0);
-		circumferenceWheel = diameterWheel * Math.PI;
-		ldistPulse = circumferenceWheel / lmaxEncpulses;
-		rdistPulse = circumferenceWheel / rmaxEncpulses;
-		
-		shootauto = (prefs.getDouble("DriveSpeed", 100) * .01);
+		shootauto = (prefs.getDouble("Auto Shoot Speed", 100) * .01);
+		gyroKp = (prefs.getDouble("Gyro Kp", 0.03));
 	}
-
+	
+	public static void AutoModeInit() {
+		autoMode.addDefault("Default", new AutonomousDefault());
+		autoMode.addObject("Right", new AutonomousRight());
+		autoMode.addObject("Center", new AutonomousCenter());
+		autoMode.addObject("Left", new AutonomousLeft());
+		SmartDashboard.putData("Autonomous Modes", autoMode);
+	}
+	
+	public static CommandGroup GetAutoMode() {
+		return autoMode.getSelected();
+	}
+	
 	/**
 	Displays Encoder Data
 	*/
-	public void EncoderData() {
+	public static void EncoderData() {
 		//Left Encoder Data
 		SmartDashboard.putNumber(
-				"LENC Count", Robot.drivetrain.encLeft.get());
-		SmartDashboard.putNumber(
-				"LENC Raw Distance", Robot.drivetrain.encLeft.getRaw());
-		SmartDashboard.putNumber(
 				"LENC Distance", Robot.drivetrain.encLeft.getDistance());
-		SmartDashboard.putNumber(
-				"LENC Rate", Robot.drivetrain.encLeft.getRate());
-		SmartDashboard.putBoolean(
-				"LENC Direction", Robot.drivetrain.encLeft.getDirection());
-		SmartDashboard.putBoolean(
-				"LENC Stopped", Robot.drivetrain.encLeft.getStopped());
-		
 		//Right Encoder Data
 		SmartDashboard.putNumber(
-				"RENC Count", Robot.drivetrain.encRight.get());
-		SmartDashboard.putNumber(
-				"RENC Raw Distance", Robot.drivetrain.encRight.getRaw());
-		SmartDashboard.putNumber(
 				"RENC Distance", Robot.drivetrain.encRight.getDistance());
-		SmartDashboard.putNumber(
-				"RENC Rate", Robot.drivetrain.encRight.getRate());
-		SmartDashboard.putBoolean(
-				"RENC Direction", Robot.drivetrain.encRight.getDirection());
-		SmartDashboard.putBoolean(
-				"RENC Stopped", Robot.drivetrain.encRight.getStopped());
 	}
 	
 	/**
@@ -138,7 +137,100 @@ public class DashboardData {
 	Displays Intake Data
 	*/
 	public void IntakeData() {
-		//Put Intake Data In Here
+		SmartDashboard.putBoolean(
+				"Cube Inside", Intake.cubeInside());
+	}
+	
+	
+	public void GyroData() {
+		SmartDashboard.putNumber("Gyro", Robot.drivetrain.GetGyro());
+	}
+	
+	
+	/**
+	Gets any messages from autonomous (Messages & Errors)
+	*/
+	public void GetAutonomousMessages() {
+		String[] autoMessages = autonomousMessages.toArray(new String[autonomousMessages.size()]);
+		String[] autoErrors = autonomousErrors.toArray(new String[autonomousErrors.size()]);
+		SmartDashboard.putStringArray("Autonomous Messages", autoMessages);
+		SmartDashboard.putStringArray("Autonomous Errors", autoErrors);
+	}
+	
+	/**
+	Gets any messages from teleop (Messages & Errors)
+	*/
+	public void GetTeleopMessages() {
+		String[] telMessages = teleopMessages.toArray(new String[teleopMessages.size()]);
+		String[] telErrors = teleopErrors.toArray(new String[teleopErrors.size()]);
+		SmartDashboard.putStringArray("Teleop Messages", telMessages);
+		SmartDashboard.putStringArray("Teleop Errors", telErrors);
+	}
+	
+	/**
+	Adds a message to autonomous
+	@param message
+	*/
+	public static void AddAutoMessage(String message) {
+		autonomousMessages.add("(" + message + ")");
+	}
+	
+	/**
+	Adds an error to autonomous
+	@param error
+	*/
+	public static void AddAutoError(String error) {
+		autonomousErrors.add("(" + error + ")");
+	}
+	
+	/**
+	Adds a message to teleop
+	@param message
+	*/
+	public static void AddTeleopMessage(String message) {
+		teleopMessages.add("(" + message + ")");
+	}
+	
+	/**
+	Adds an error to teleop
+	@param error
+	*/
+	public static void AddTeleopError(String error) {
+		teleopErrors.add("(" + error + ")");
+	}
+	
+	/**
+	Adds a message to either teleop or auto based on which is enabled
+	@param message
+	*/
+	public static void AddGameMessage(String message) {
+		if (DriverStation.getInstance().isAutonomous()) {
+			AddAutoMessage(message);
+		} else if (DriverStation.getInstance().isOperatorControl()) {
+			AddTeleopMessage(message);
+		}
+	}
+	
+	/**
+	Adds an error to either teleop or auto based on which is enables
+	@param error
+	 */
+	public static void AddGameError(String error) {
+		if (DriverStation.getInstance().isAutonomous()) {
+			AddAutoError(error);
+		} else if (DriverStation.getInstance().isOperatorControl()) {
+			AddTeleopError(error);
+		}
+	}
+	
+	/**
+	Clears all messages and errors
+	*/
+	public void ClearMessages() {
+		autonomousMessages.clear();
+		autonomousErrors.clear();
+		teleopMessages.clear();
+		teleopErrors.clear();
 	}
 	
 }

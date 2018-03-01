@@ -1,11 +1,12 @@
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.OI;
 import org.usfirst.frc.team6957.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+Operates Elevator with Joysticks
  */
 public class ElevatorControlWithJoystick extends Command {
 	public ElevatorControlWithJoystick() {
@@ -14,7 +15,13 @@ public class ElevatorControlWithJoystick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.movingElevator(Robot.oi.getOperator());
+    	if (OI.getOperator().getRawAxis(1) < 0 && !Robot.elevator.elevatorHigh()) {
+    		Robot.elevator.elevatorUpJoystick(OI.getOperator());
+    	} else if (OI.getOperator().getRawAxis(1) > 0 && !Robot.elevator.elevatorLow()) {
+    		Robot.elevator.elevatorDownJoystick(OI.getOperator());
+    	} else {
+    		Robot.elevator.stopElevator();
+    	}	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -24,6 +31,6 @@ public class ElevatorControlWithJoystick extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.stopDriveTrain();
+    	Robot.elevator.stopElevator();
     }
 }

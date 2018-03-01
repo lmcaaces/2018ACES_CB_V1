@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetElevatorClimb extends Command {
 	
 	private boolean status;
-	public String elevatorStatus = "Null";
 
     public SetElevatorClimb() {
         // Use requires() here to declare subsystem dependencies
@@ -30,20 +29,18 @@ public class SetElevatorClimb extends Command {
     	if (!Robot.elevator.elevatorHigh() && (Robot.elevator.elevatorLow() || Robot.elevator.elevatorSwitch())) {
     		while (!Robot.elevator.elevatorHigh()) {
     			Robot.elevator.elevatorUpDown(DashboardData.elevatorspeed);
-        		elevatorStatus = "Climbing";
     		}
     	}
     		
     	else if (Robot.elevator.elevatorHigh() && !Robot.elevator.elevatorLow() && !Robot.elevator.elevatorSwitch()) {
     		Robot.elevator.stopElevator();
     		status = true;
-    		elevatorStatus = "Stopped";
     	}
     		    			
     	else {
     		Robot.elevator.stopElevator();
     		status = true;
-    		elevatorStatus = "Error";
+    		DashboardData.AddGameError("Elevator move to Climb Failed");
 		}
     			
     }

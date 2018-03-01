@@ -1,13 +1,17 @@
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.DashboardData;
+import org.usfirst.frc.team6957.robot.OI;
+import org.usfirst.frc.team6957.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoTurn45 extends Command {
+public class IntakeWithFix extends Command {
 
-    public AutoTurn45() {
+    public IntakeWithFix() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -18,6 +22,11 @@ public class AutoTurn45 extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if (!(OI.getOperator().getXButtonPressed())) {
+    		Robot.intake.startIntake(DashboardData.collectcube);
+    	} else {
+    		Robot.intake.fixPositionCube(0.4);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

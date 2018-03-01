@@ -8,11 +8,16 @@
 package org.usfirst.frc.team6957.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousCenter;
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousDefault;
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousLeft;
+import org.usfirst.frc.team6957.robot.commandgroup.AutonomousRight;
 import org.usfirst.frc.team6957.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6957.robot.subsystems.Elevator;
 import org.usfirst.frc.team6957.robot.subsystems.Intake;
+
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,12 +36,15 @@ public class Robot extends IterativeRobot {
 	/**Intake Subsystem*/
 	public static Intake intake = new Intake();
 	
-	//Instantiates the OI & SmartDashboard-SD (DashboardData class)
+	//Instantiates the OI, SmartDashboard-SD (DashboardData class), and Autonomous Command
 	/**Operator Input*/
 	public static OI oi = new OI();
 	/**SmartDashboard*/
 	public DashboardData SD = new DashboardData();
 	
+	Command autonomousCommand;
+	
+	public Autonomous Auton = new Autonomous();
 	
 //Main Programs//
 	/**
@@ -44,6 +52,9 @@ public class Robot extends IterativeRobot {
 	*/
 	@Override
 	public void robotInit() {
+		SD.CheckRobotSettings();
+		drivetrain.CalibrateGyro();
+		DashboardData.AutoModeInit();
 	}
 	
 	@Override
@@ -54,14 +65,13 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		SD.DisabledDash();
+		drivetrain.resetEncoders();
 	}
 
 	@Override
 	public void autonomousInit() {
-		//AutonomousCommand.start(); //Strts Autonomous Command
-		
-		//Resets encoders when autonomous is enabled
-		drivetrain.resetEncoders();
+		autonomousCommand.equals(DashboardData.GetAutoMode());
+		autonomousCommand.start(); //Starts Autonomous Command
 	}
 
 	/**
@@ -71,46 +81,12 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		SD.AutonomousDash();
-		
-		//TEMP Testing driving with encoders
-		double encL = Robot.drivetrain.encLeft.getDistance();
-		double encR = Robot.drivetrain.encRight.getDistance();
-		if (encL <= (12*5) && encR <= (12*5) && encL == encR) {
-			while (encL <= (12*5) && encR <= (12*5) && encL == encR) {
-				Robot.drivetrain.tankDrive.arcadeDrive(0.6, 0.0);
-				SD.AutonomousDash();
-				encL = Robot.drivetrain.encLeft.getDistance();
-				encR = Robot.drivetrain.encRight.getDistance();
-			}
-		} else if (encL <= (12*5) && encR <= (12*5) && encL < encR){
-			while (encL <= (12*5) && encR <= (12*5) && encL < encR) {
-				Robot.drivetrain.tankDrive.arcadeDrive(-0.6, 0.4);
-				SD.AutonomousDash();
-				encL = Robot.drivetrain.encLeft.getDistance();
-				encR = Robot.drivetrain.encRight.getDistance();
-			}
-		} else if (encL <= (12*5) && encR <= (12*5) && encL > encR) {
-			while (encL <= (12*5) && encR <= (12*5) && encL > encR) {
-				Robot.drivetrain.tankDrive.arcadeDrive(-0.6, -0.4);
-				SD.AutonomousDash();
-				encL = Robot.drivetrain.encLeft.getDistance();
-				encR = Robot.drivetrain.encRight.getDistance();
-			}
-		} else if (encL < 0  || encR < 0) {
-			Robot.drivetrain.stopDriveTrain();
-			SD.AutonomousDash();
-			encL = Robot.drivetrain.encLeft.getDistance();
-			encR = Robot.drivetrain.encRight.getDistance();
-		} else {
-			Robot.drivetrain.stopDriveTrain();
-		}
 	}
-
+	
 	@Override
 	public void teleopInit() {
 		//AutonomousCommand.cancel(); //Ensures that the Autonomous is stopped
 	}
-
 	/**
 	This function is called periodically during operator control.
 	*/
@@ -118,15 +94,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
-		SmartDashboard.putNumber("Left Y Axis", OI.driver.getRawAxis(1));
-		SmartDashboard.putNumber("Right Y Axis", OI.driver.getRawAxis(5));
-		SmartDashboard.putNumber("Right X Axis", OI.driver.getRawAxis(4));
+		
 		//TEMP Resets Encoders and checks for any new params
 		if (OI.driver.getAButton()) {
 			drivetrain.resetEncoders();
-			drivetrain.setEncParameter();
+			drivetrain.ResetGyro();
 		}
-			
+		
 	}
 
 	/**

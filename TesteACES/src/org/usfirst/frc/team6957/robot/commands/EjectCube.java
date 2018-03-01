@@ -13,8 +13,8 @@ import org.usfirst.frc.team6957.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * An example command.  You can replace me with your own command.
- */
+Turns on intake motos in eject direction
+*/
 public class EjectCube extends Command {
 	public EjectCube() {
 		// Use requires() here to declare subsystem dependencies

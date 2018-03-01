@@ -8,9 +8,12 @@
 package org.usfirst.frc.team6957.robot.subsystems;
 
 
+import org.usfirst.frc.team6957.robot.commands.IntakeControlWithJoystick;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -22,16 +25,11 @@ public class Intake extends Subsystem {
 	
 	private SpeedController intakeRight = new Spark(2);
 	private SpeedController intakeLeft = new Spark(3);
-	private DigitalInput cubeDetector = new DigitalInput(4);
+	private static DigitalInput cubeDetector = new DigitalInput(8);
 	
-	public Intake() {
-		// Put everything to the LiveWindow for testing.
-		addChild("Intake Right: ", (Spark) intakeRight);		
-		addChild("Intake Left: ", (Spark) intakeLeft);
-		addChild("Cube Detector: ", cubeDetector);
-	}
+	public Intake() {}
 	
-	public boolean cubeInside() {
+	public static boolean cubeInside() {
 		// Is there a cube in the robot?
 		return cubeDetector.get(); // Returns 1 for yes and 0 for no		
 	}
@@ -45,8 +43,18 @@ public class Intake extends Subsystem {
 		intakeRight.stopMotor(); // Stop right motor
 		intakeLeft.stopMotor(); // Stop left motor
 	}
+	
+	public void fixPositionCube(double speed) {
+		intakeRight.set(speed);
+		intakeLeft.set(speed);
+	}
+	
+	public void intakeAnalog(XboxController Xbox) {
+		intakeRight.set(-Xbox.getRawAxis(2));
+		intakeLeft.set(Xbox.getRawAxis(3));
+	}
 
 	public void initDefaultCommand() {
-		//setDefaultCommand(new StopElevator());
+		setDefaultCommand(new IntakeControlWithJoystick());
 	}
 }

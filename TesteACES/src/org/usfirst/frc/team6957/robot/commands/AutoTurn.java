@@ -1,33 +1,42 @@
 package org.usfirst.frc.team6957.robot.commands;
 
+import org.usfirst.frc.team6957.robot.Autonomous;
 import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
-Drives robot based on drive mode preference
+Turns robot with two parameters, degrees and speed
  */
-public class DriveWithJoystick extends Command {
+public class AutoTurn extends Command {
 
-    public DriveWithJoystick() {
+	private double deg;
+	private double spd;
+	private boolean finished;
+	
+    public AutoTurn(double degrees, double speed) {
         requires(Robot.drivetrain);
+        deg = degrees;
+        spd = speed;
     }
-
+	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (DashboardData.driveMode == 1) {
-    		Robot.drivetrain.driveAsArcade(Robot.oi.getDriver());
-    	} else if (DashboardData.driveMode == 2) {
-    		Robot.drivetrain.driveAsTank(Robot.oi.getDriver());
+    	if (deg < 0) {
+    		Autonomous.TurnLeft(deg, spd);
+    		finished = true;
+    	} else if (deg > 0) {
+    		Autonomous.TurnRight(deg, spd);
+    		finished = true;
     	} else {
-    		DashboardData.AddTeleopError("Invalid Drive Mode");
+    		DashboardData.AddAutoError("Invalid Degrees for turn");
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return finished;
     }
 
     // Called once after isFinished returns true
