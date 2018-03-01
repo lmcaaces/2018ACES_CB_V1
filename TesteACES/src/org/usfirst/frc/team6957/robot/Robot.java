@@ -8,10 +8,7 @@
 package org.usfirst.frc.team6957.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousCenter;
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousDefault;
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousLeft;
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousRight;
+
 import org.usfirst.frc.team6957.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6957.robot.subsystems.Elevator;
 import org.usfirst.frc.team6957.robot.subsystems.Intake;

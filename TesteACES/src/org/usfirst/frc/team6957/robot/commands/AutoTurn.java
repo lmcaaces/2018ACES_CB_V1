@@ -23,14 +23,12 @@ public class AutoTurn extends Command {
 	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (deg < 0) {
-    		Autonomous.TurnLeft(deg, spd);
-    		finished = true;
-    	} else if (deg > 0) {
-    		Autonomous.TurnRight(deg, spd);
+    	if (deg != 0) {
+    		Autonomous.TurnWithGyro(deg, spd);
     		finished = true;
     	} else {
-    		DashboardData.AddAutoError("Invalid Degrees for turn");
+    		DashboardData.AddGameError("Invalid Degrees for turn");
+    		finished = true;
     	}
     }
 
