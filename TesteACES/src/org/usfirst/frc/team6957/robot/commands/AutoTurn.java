@@ -30,6 +30,16 @@ public class AutoTurn extends Command {
     		DashboardData.AddGameError("Invalid Degrees for turn");
     		finished = true;
     	}
+    	
+    	/*
+    	if (deg < 0) {
+    		Autonomous.TurnLeft(Math.abs(deg), spd);
+    	} else if (deg > 0) {
+    		Autonomous.TurnRight(deg, spd);
+    	} else {
+    		DashboardData.AddGameError("Invalid Degrees for turn");
+    	}
+    	*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

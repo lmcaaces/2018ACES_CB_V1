@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team6957.robot;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 
@@ -15,6 +16,7 @@ import org.usfirst.frc.team6957.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public DashboardData SD = new DashboardData();
 	
 	Command autonomousCommand;
+	Timer autoTimer = new Timer();
 	
 	public Autonomous Auton = new Autonomous();
 	
@@ -50,8 +53,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		SD.CheckRobotSettings();
-		drivetrain.CalibrateGyro();
+		//drivetrain.CalibrateGyro();
 		DashboardData.AutoModeInit();
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 	
 	@Override
@@ -67,8 +71,10 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand.equals(DashboardData.GetAutoMode());
-		autonomousCommand.start(); //Starts Autonomous Command
+		//autonomousCommand.equals(DashboardData.GetAutoMode());
+		//autonomousCommand.start(); //Starts Autonomous Command
+		autoTimer.reset();
+		autoTimer.start();
 	}
 
 	/**
@@ -76,13 +82,29 @@ public class Robot extends IterativeRobot {
 	*/
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		//Scheduler.getInstance().run();
 		SD.AutonomousDash();
+
+		if (autoTimer.get() < 4.0)
+		{
+			drivetrain.stopDriveTrain();
+		}
+		else if (autoTimer.get() < 7.0)
+		{
+			drivetrain.driveForward(0.5);
+		}
+		else
+		{
+			drivetrain.stopDriveTrain();
+		}
 	}
 	
 	@Override
 	public void teleopInit() {
-		//AutonomousCommand.cancel(); //Ensures that the Autonomous is stopped
+		if (autonomousCommand != null)
+		{
+			autonomousCommand.cancel(); //Ensures that the Autonomous is stopped
+		}
 	}
 	/**
 	This function is called periodically during operator control.
@@ -91,13 +113,16 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
-		
-		//TEMP Resets Encoders and checks for any new params
-		if (OI.driver.getAButton()) {
-			drivetrain.resetEncoders();
-			drivetrain.ResetGyro();
-		}
-		
+	
+	
+    	if (OI.getOperator().getRawAxis(1) < 0 && !Robot.elevator.elevatorHigh()) {
+    		Robot.elevator.elevatorUpJoystick(OI.getOperator());
+    	} else if (OI.getOperator().getRawAxis(1) > 0 && !Robot.elevator.elevatorLow()) {
+    		Robot.elevator.elevatorDownJoystick(OI.getOperator());
+    	} else {
+    		Robot.elevator.stopElevator();
+    	}	
+
 	}
 
 	/**

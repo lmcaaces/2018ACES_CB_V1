@@ -7,15 +7,10 @@
 
 package org.usfirst.frc.team6957.robot;
 
-import org.usfirst.frc.team6957.robot.commands.AutoTurn;
-import org.usfirst.frc.team6957.robot.commands.AutoTurnGyro;
 import org.usfirst.frc.team6957.robot.commands.CollectCube;
-import org.usfirst.frc.team6957.robot.commands.DriveStraight;
 import org.usfirst.frc.team6957.robot.commands.EjectCube;
 import org.usfirst.frc.team6957.robot.commands.FixCube;
-import org.usfirst.frc.team6957.robot.commands.SetElevatorClimb;
-import org.usfirst.frc.team6957.robot.commands.SetElevatorPickup;
-import org.usfirst.frc.team6957.robot.commands.SetElevatorSwitch;
+
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
@@ -35,9 +30,9 @@ public class OI {
 		
 		//Driver Controller
 		//Button driver_A = new JoystickButton(driver, 1);
-		Button driver_B = new JoystickButton(driver, 2);
-		Button driver_X = new JoystickButton(driver, 3);
-		Button driver_Y = new JoystickButton(driver, 4);
+		//Button driver_B = new JoystickButton(driver, 2);
+		//Button driver_X = new JoystickButton(driver, 3);
+		//Button driver_Y = new JoystickButton(driver, 4);
 		//Button driver_lb = new JoystickButton(driver, 5);
 		//Button driver_rb = new JoystickButton(driver, 6);
 		//Button driver_select = new JoystickButton(driver, 7);
@@ -46,10 +41,10 @@ public class OI {
 		//Button driver_rjb = new JoystickButton(driver, 10);
 		
 		//Operator Controller
-		Button operator_A = new JoystickButton(operator, 1);
-		Button operator_B = new JoystickButton(operator, 2);
+		//Button operator_A = new JoystickButton(operator, 1);
+		//Button operator_B = new JoystickButton(operator, 2);
 		Button operator_X = new JoystickButton(operator, 3);
-		Button operator_Y = new JoystickButton(operator, 4);
+		//Button operator_Y = new JoystickButton(operator, 4);
 		Button operator_lb = new JoystickButton(operator, 5);
 		Button operator_rb = new JoystickButton(operator, 6);
 		//Button operator_select = new JoystickButton(operator, 7);
@@ -60,13 +55,12 @@ public class OI {
 		operator_X.whileHeld(new FixCube());
 		operator_rb.whileHeld(new CollectCube()); // Collector on
 		operator_lb.whileHeld(new EjectCube()); // Shooter on
-		operator_A.whenPressed(new SetElevatorPickup()); // Get elevator ready to pick up cubes
-		operator_B.whenPressed(new SetElevatorSwitch()); // Get elevator ready to score cubes in the switch
-		operator_Y.whenPressed(new SetElevatorClimb()); // Get elevator ready to climb
+		//operator_Y.whileHeld(new ElevatorLockUpDown());
+		//operator_X.whileHeld(new ElevatorLockUpDown());
 		//driver_A.whenPressed(new ResetGyro());
-		driver_B.whenPressed(new AutoTurn(90, 0.7));
-		driver_X.whenPressed(new AutoTurn(-90, 0.7));
-		driver_Y.whenPressed(new DriveStraight(3, 0.7));
+		//driver_B.whenPressed(new AutoTurn(90, 0.7));
+		//driver_X.whenPressed(new AutoTurn(-90, 0.7));
+		//driver_Y.whenPressed(new DriveStraight(3, 0.7));
 	}
 	
 	public String getDriverStationData() {
@@ -76,12 +70,20 @@ public class OI {
 	
 	public char getSwitchLoc() {
 		String gamedata = getDriverStationData();
-		return gamedata.charAt(0);
+		if ((gamedata != null) && (gamedata.length() >= 3))
+		{
+			return gamedata.charAt(0);
+		}
+		return 'R';
 	}
 	
 	public char getScaleLoc() {
 		String gamedata = getDriverStationData();
-		return gamedata.charAt(1);
+		if ((gamedata != null) && (gamedata.length() >= 3))
+		{
+			return gamedata.charAt(1);
+		}
+		return 'R';
 	}
 	
 	/**Returns Driver Controller*/

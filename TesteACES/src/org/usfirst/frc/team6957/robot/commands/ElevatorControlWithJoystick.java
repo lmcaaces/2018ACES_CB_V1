@@ -4,6 +4,7 @@ import org.usfirst.frc.team6957.robot.OI;
 import org.usfirst.frc.team6957.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
 Operates Elevator with Joysticks
@@ -12,7 +13,6 @@ public class ElevatorControlWithJoystick extends Command {
 	public ElevatorControlWithJoystick() {
         requires(Robot.elevator);
     }
-
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (OI.getOperator().getRawAxis(1) < 0 && !Robot.elevator.elevatorHigh()) {

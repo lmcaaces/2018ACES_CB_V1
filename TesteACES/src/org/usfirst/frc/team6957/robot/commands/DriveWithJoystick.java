@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6957.robot.commands;
 
 import org.usfirst.frc.team6957.robot.DashboardData;
+import org.usfirst.frc.team6957.robot.OI;
 import org.usfirst.frc.team6957.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,9 +18,9 @@ public class DriveWithJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (DashboardData.driveMode == 1) {
-    		Robot.drivetrain.driveAsArcade(Robot.oi.getDriver());
+    		Robot.drivetrain.driveAsArcade(OI.getDriver());
     	} else if (DashboardData.driveMode == 2) {
-    		Robot.drivetrain.driveAsTank(Robot.oi.getDriver());
+    		Robot.drivetrain.driveAsTank(OI.getDriver());
     	} else {
     		DashboardData.AddTeleopError("Invalid Drive Mode");
     	}

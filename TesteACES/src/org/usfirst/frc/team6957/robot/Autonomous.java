@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6957.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous {
@@ -16,7 +17,7 @@ public class Autonomous {
 		double encL = Robot.drivetrain.encLeft.getDistance();
 		double encR = Robot.drivetrain.encRight.getDistance();
 		//double angle = Robot.drivetrain.GetGyro();
-		while (((encL + encR)/2) <= (distance * 12)) {
+		while (((encL + encR)/2) <= (distance * 12) && DriverStation.getInstance().isAutonomous()) {
 			Robot.drivetrain.drivetrain.arcadeDrive(-speed, 0);
 			encL = Robot.drivetrain.encLeft.getDistance();
 			encR = Robot.drivetrain.encRight.getDistance();
@@ -34,7 +35,7 @@ public class Autonomous {
 		Robot.drivetrain.resetEncoders();
 		double encL = Robot.drivetrain.encLeft.getDistance();
 		double encR = Robot.drivetrain.encRight.getDistance();
-		while ((encL >= -(degrees / 4)) && (encR <= (degrees / 4))) {
+		while ((encL >= -(degrees / 4)) && (encR <= (degrees / 4)) && DriverStation.getInstance().isAutonomous()) {
 			Robot.drivetrain.drivetrain.tankDrive(speed, -speed);
 			encL = Robot.drivetrain.encLeft.getDistance();
 			encR = Robot.drivetrain.encRight.getDistance();
@@ -52,7 +53,7 @@ public class Autonomous {
 		Robot.drivetrain.resetEncoders();
 		double encL = Robot.drivetrain.encLeft.getDistance();
 		double encR = Robot.drivetrain.encRight.getDistance();
-		while ((encL >= -(degrees / 4)) && (encR <= (degrees / 4))) {
+		while ((encL >= -(degrees / 4)) && (encR <= (degrees / 4)) && DriverStation.getInstance().isAutonomous()) {
 			Robot.drivetrain.drivetrain.tankDrive(-speed, speed);
 			encL = Robot.drivetrain.encLeft.getDistance();
 			encR = Robot.drivetrain.encRight.getDistance();
@@ -72,13 +73,13 @@ public class Autonomous {
 		
 		if (degrees < 0) { //Turns left
 			DashboardData.AddGameMessage("Turning Right");
-			while (angle > (degrees * 0.8) && angle < 5) {
+			while (angle > (degrees * 0.8) && angle < 5 && DriverStation.getInstance().isAutonomous()) {
 				angle = Robot.drivetrain.GetGyro();
 				Robot.drivetrain.drivetrain.arcadeDrive(0, -speed);
 			}
 		} else if (degrees > 0) { //Turns right
 			DashboardData.AddGameMessage("Turning Right");
-			while (angle < (degrees * 0.8) && angle > -5) {
+			while (angle < (degrees * 0.8) && angle > -5 && DriverStation.getInstance().isAutonomous()) {
 				angle = Robot.drivetrain.GetGyro();
 				Robot.drivetrain.drivetrain.arcadeDrive(0, speed);
 			}
@@ -98,7 +99,7 @@ public class Autonomous {
 		
 		if (degrees > 0) {
 			DashboardData.AddGameMessage("Turning Right");
-			while (angle < degrees && angle > -5) {
+			while (angle < degrees && angle > -5 && DriverStation.getInstance().isAutonomous()) {
 				angle = Robot.drivetrain.GetGyro();
 				Robot.drivetrain.drivetrain.arcadeDrive(0, ((degrees - Robot.drivetrain.GetGyro()) * (1/90)));
 				SmartDashboard.putNumber("Angle", angle);
@@ -106,7 +107,7 @@ public class Autonomous {
 			}
 		} else if (degrees < 0) {
 			DashboardData.AddGameMessage("Turning Left");
-			while (angle > degrees && angle > 5) {
+			while (angle > degrees && angle > 5 && DriverStation.getInstance().isAutonomous()) {
 				angle = Robot.drivetrain.GetGyro();
 				Robot.drivetrain.drivetrain.arcadeDrive(0, ((degrees - Robot.drivetrain.GetGyro()) * (1/90)));
 				SmartDashboard.putNumber("Angle", angle);

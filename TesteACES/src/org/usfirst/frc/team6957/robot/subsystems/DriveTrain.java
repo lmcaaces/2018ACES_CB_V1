@@ -110,6 +110,11 @@ public class DriveTrain extends Subsystem {
 		leftDrive.stopMotor();
 	}
 	
+	public void driveForward(double speed)
+	{
+		rightDrive.set(speed);
+		leftDrive.set(-speed);
+	}
 	/*
 	Default command (Set to either drive modes)
 	@see edu.wpi.first.wpilibj.command.Subsystem#initDefaultCommand()
