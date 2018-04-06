@@ -28,7 +28,7 @@ public class SetElevatorClimb extends Command {
     	
     	if (!Robot.elevator.elevatorHigh() && (Robot.elevator.elevatorLow() || Robot.elevator.elevatorSwitch())) {
     		while (!Robot.elevator.elevatorHigh()) {
-    			Robot.elevator.elevatorUpDown(DashboardData.elevatorspeed);
+    			Robot.elevator.elevatorUpDown(1.0);
     		}
     	}
     		

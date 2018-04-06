@@ -41,9 +41,6 @@ public class Robot extends IterativeRobot {
 	/**SmartDashboard*/
 	public DashboardData SD = new DashboardData();
 	
-	Command autonomousCommand;
-	Timer autoTimer = new Timer();
-	
 	public Autonomous Auton = new Autonomous();
 	
 //Main Programs//
@@ -53,8 +50,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		SD.CheckRobotSettings();
-		//drivetrain.CalibrateGyro();
-		DashboardData.AutoModeInit();
 		CameraServer.getInstance().startAutomaticCapture();
 	}
 	
@@ -73,8 +68,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		//autonomousCommand.equals(DashboardData.GetAutoMode());
 		//autonomousCommand.start(); //Starts Autonomous Command
-		autoTimer.reset();
-		autoTimer.start();
 	}
 
 	/**
@@ -84,28 +77,13 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		//Scheduler.getInstance().run();
 		SD.AutonomousDash();
-
-		if (autoTimer.get() < 4.0)
-		{
-			drivetrain.stopDriveTrain();
-		}
-		else if (autoTimer.get() < 7.0)
-		{
-			drivetrain.driveForward(0.5);
-		}
-		else
-		{
-			drivetrain.stopDriveTrain();
-		}
+		AutonomousModes.Autonomous();
 	}
 	
 	@Override
 	public void teleopInit() {
-		if (autonomousCommand != null)
-		{
-			autonomousCommand.cancel(); //Ensures that the Autonomous is stopped
-		}
 	}
+	
 	/**
 	This function is called periodically during operator control.
 	*/

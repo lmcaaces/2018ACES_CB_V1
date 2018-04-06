@@ -99,13 +99,13 @@ public class Elevator extends Subsystem {
 	@param Xbox
 	*/
 	public void elevatorDownJoystick(XboxController Xbox) {
-		elevatorRight.set(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed)); // Right motor running at determined value
-		elevatorLeft.set(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed));	// Left motor running at determined value
+		elevatorRight.set(Math.abs(Xbox.getRawAxis(1))); // Right motor running at determined value
+		elevatorLeft.set(Math.abs(Xbox.getRawAxis(1)));	// Left motor running at determined value
 	}
 	
 	public void elevatorUpJoystick(XboxController Xbox) {
-		elevatorRight.set(-(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed))); // Right motor running at determined value
-		elevatorLeft.set(-(Math.abs(Xbox.getRawAxis(1)*DashboardData.elevatorspeed)));	// Left motor running at determined value
+		elevatorRight.set(-(Math.abs(Xbox.getRawAxis(1)))); // Right motor running at determined value
+		elevatorLeft.set(-(Math.abs(Xbox.getRawAxis(1))));	// Left motor running at determined value
 	}
 	
 	/**

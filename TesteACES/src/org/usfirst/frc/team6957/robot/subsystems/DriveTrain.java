@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team6957.robot.subsystems;
 
-import org.usfirst.frc.team6957.robot.DashboardData;
 import org.usfirst.frc.team6957.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -23,9 +22,6 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class DriveTrain extends Subsystem {
-	
-	//Instantiates Gyro
-	public Gyro gyro = new AnalogGyro(0);
 	
 	//Instantiates Sparks
 	private SpeedController rightDrive = new Spark(0);
@@ -71,26 +67,13 @@ public class DriveTrain extends Subsystem {
 		encLeft.reset();
 	}
 	
-	
-	public void CalibrateGyro() {
-		gyro.calibrate();
-	}
-	
-	public double GetGyro() {
-		return gyro.getAngle();
-	}
-	
-	public void ResetGyro() {
-		gyro.reset();
-	}
-	
 	/**
 	Drives Robot with TankDrive
 	. Takes one parameter: Controller
 	@param Xbox
 	*/
 	public void driveAsTank(XboxController Xbox) {
-		drivetrain.tankDrive((Xbox.getRawAxis(1)*DashboardData.drivespeed), (Xbox.getRawAxis(5)*DashboardData.drivespeed));		
+		drivetrain.tankDrive((Xbox.getRawAxis(1)), (Xbox.getRawAxis(5)));		
 	}
 	
 	/**
@@ -99,7 +82,7 @@ public class DriveTrain extends Subsystem {
 	@param Xbox
 	*/
 	public void driveAsArcade(XboxController Xbox) {
-		drivetrain.arcadeDrive((Xbox.getRawAxis(1)*DashboardData.drivespeed), (Xbox.getRawAxis(4)*DashboardData.drivespeed));
+		drivetrain.arcadeDrive((Xbox.getRawAxis(1)), (Xbox.getRawAxis(4)));
 	}
 	
 	/**

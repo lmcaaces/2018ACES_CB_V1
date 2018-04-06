@@ -26,7 +26,7 @@ public class SetElevatorSwitch extends Command {
     protected void execute() {
     	if (!Robot.elevator.elevatorSwitch() && Robot.elevator.elevatorLow() && !Robot.elevator.elevatorHigh()) {     		
     		while (!Robot.elevator.elevatorSwitch()) {
-    			Robot.elevator.elevatorUpDown(DashboardData.elevatorspeed);
+    			Robot.elevator.elevatorUpDown(1.0);
     		}
     	} else if (Robot.elevator.elevatorSwitch() && !Robot.elevator.elevatorLow() && !Robot.elevator.elevatorSwitch()) {
     		Robot.elevator.stopElevator();

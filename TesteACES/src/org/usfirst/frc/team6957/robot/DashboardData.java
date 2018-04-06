@@ -2,16 +2,11 @@ package org.usfirst.frc.team6957.robot;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousCenter;
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousDefault;
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousLeft;
-import org.usfirst.frc.team6957.robot.commandgroup.AutonomousRight;
+
 import org.usfirst.frc.team6957.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardData {
@@ -19,14 +14,20 @@ public class DashboardData {
 	//Preference-UserInput Variables
 	public Preferences prefs;
 	public static int driveMode;
-	public static String autonomousMode;
-	public static double drivespeed;
-	public static double collectcube;
-	public static double ejectcube;
-	public static double elevatorspeed;
-	public static double shootauto;
-	public static double gyroKp;
-	public static SendableChooser<CommandGroup> autoMode = new SendableChooser<CommandGroup>();
+	public static double distance1;
+	public static double distance2;
+	public static double distance3;
+	public static double turn1;
+	public static double turn2;
+	public static double turn3;
+	public static double time1;
+	public static double time2;
+	public static double time3;
+	public static double autoSpeed;
+	public static double autoTurnSpeed;
+	public static double autoDelay;
+	public static String autoMode;
+	public static boolean autoType;
 	public static ArrayList<String> autonomousMessages = new ArrayList<String>();
 	public static ArrayList<String> autonomousErrors = new ArrayList<String>();
 	public static ArrayList<String> teleopMessages = new ArrayList<String>();
@@ -69,8 +70,7 @@ public class DashboardData {
 	*/
 	public void UniversalDash() {
 		EncoderData();
-		ElevatorData();
-		GyroData();
+		//ElevatorData();
 	}
 	
 	/**
@@ -87,26 +87,20 @@ public class DashboardData {
 	*/
 	public void RobotSettings() {
 		prefs = Preferences.getInstance();
-		autonomousMode = prefs.getString("Autonomous Mode", "D");
 		driveMode = prefs.getInt("Drive Mode", 0);
-		drivespeed = (prefs.getDouble("Drive Speed", 100) * .01);
-		collectcube = (prefs.getDouble("Intake Speed", 60) * .01);
-		ejectcube = (prefs.getDouble("Outtake Speed", 100) * -.01);
-		elevatorspeed = (prefs.getDouble("Elevator Speed", 50) * .01);
-		shootauto = (prefs.getDouble("Auto Shoot Speed", 100) * .01);
-		gyroKp = (prefs.getDouble("Gyro Kp", 0.03));
-	}
-	
-	public static void AutoModeInit() {
-		autoMode.addDefault("Default", new AutonomousDefault());
-		autoMode.addObject("Right", new AutonomousRight());
-		autoMode.addObject("Center", new AutonomousCenter());
-		autoMode.addObject("Left", new AutonomousLeft());
-		SmartDashboard.putData("Autonomous Modes", autoMode);
-	}
-	
-	public static CommandGroup GetAutoMode() {
-		return autoMode.getSelected();
+		autoMode = prefs.getString("Autonomous Mode", "Default");
+		autoType = prefs.getBoolean("Use Encoders for Autonomous", false);
+		distance1 = (prefs.getDouble("Distance 1", 1));
+		distance2 = (prefs.getDouble("Distance 2", 1));
+		distance3 = (prefs.getDouble("Distance 3", 1));
+		turn1 = (prefs.getDouble("Turn 1", 1));
+		turn2 = (prefs.getDouble("Turn 2", 1));
+		turn3 = (prefs.getDouble("Turn 3", 1));
+		time1 = (prefs.getDouble("Time 1", 1));
+		time2 = (prefs.getDouble("Time 2", 1));
+		time3 = (prefs.getDouble("Time 3", 1));
+		autoSpeed = (prefs.getDouble("Auto Speed", 0.6));
+		autoTurnSpeed = (prefs.getDouble("Auto Turn Speed", 0.6));
 	}
 	
 	/**
@@ -139,11 +133,6 @@ public class DashboardData {
 	public void IntakeData() {
 		SmartDashboard.putBoolean(
 				"Cube Inside", Intake.cubeInside());
-	}
-	
-	
-	public void GyroData() {
-		SmartDashboard.putNumber("Gyro", Robot.drivetrain.GetGyro());
 	}
 	
 	
