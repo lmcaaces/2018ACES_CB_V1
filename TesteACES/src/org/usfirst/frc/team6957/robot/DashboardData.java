@@ -26,6 +26,7 @@ public class DashboardData {
 	public static double autoSpeed;
 	public static double autoTurnSpeed;
 	public static double autoDelay;
+	public static double intakeAngleSpeed;
 	public static String autoMode;
 	public static boolean autoType;
 	public static ArrayList<String> autonomousMessages = new ArrayList<String>();
@@ -101,6 +102,7 @@ public class DashboardData {
 		time3 = (prefs.getDouble("Time 3", 1));
 		autoSpeed = (prefs.getDouble("Auto Speed", 0.6));
 		autoTurnSpeed = (prefs.getDouble("Auto Turn Speed", 0.6));
+		intakeAngleSpeed = (prefs.getDouble("Intake Angle Speed", 1.0));
 	}
 	
 	/**
@@ -113,18 +115,6 @@ public class DashboardData {
 		//Right Encoder Data
 		SmartDashboard.putNumber(
 				"RENC Distance", Robot.drivetrain.encRight.getDistance());
-	}
-	
-	/**
-	Displays Elevator Data
-	*/
-	public void ElevatorData() {
-		SmartDashboard.putBoolean(
-				"Elevator is High", Robot.elevator.elevatorHigh());
-		SmartDashboard.putBoolean(
-				"Elevator is in the Middle", Robot.elevator.elevatorSwitch());
-		SmartDashboard.putBoolean(
-				"Elevator is Low", Robot.elevator.elevatorLow());
 	}
 	
 	/**

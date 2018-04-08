@@ -61,12 +61,12 @@ public class Autonomous {
 		}
 		DashboardData.AddAutoMessage("Turn Was a Success!");
 	}
-	
+	/*
 	/**
 	Turns both directions using the Gyro.
 	@param degrees
 	@param speed
-	*/
+	*//*
 	public static void TurnWithGyro(double degrees, double speed) {
 		Robot.drivetrain.ResetGyro();
 		double angle = Robot.drivetrain.GetGyro();
@@ -92,7 +92,7 @@ public class Autonomous {
 	/**
 	Turns both directions using the Gyro with a P value.
 	@param degrees
-	*/
+	*//*
 	public static void TurnWithGyroPID(double degrees) {
 		Robot.drivetrain.ResetGyro();
 		double angle = Robot.drivetrain.GetGyro();
@@ -118,4 +118,5 @@ public class Autonomous {
 		}
 		DashboardData.AddGameMessage("Turn is Finished");
 	}
+	*/
 }

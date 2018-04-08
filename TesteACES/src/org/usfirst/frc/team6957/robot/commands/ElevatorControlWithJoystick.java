@@ -15,9 +15,9 @@ public class ElevatorControlWithJoystick extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (OI.getOperator().getRawAxis(1) < 0 && !Robot.elevator.elevatorHigh()) {
+    	if (OI.getOperator().getRawAxis(1) < 0) {
     		Robot.elevator.elevatorUpJoystick(OI.getOperator());
-    	} else if (OI.getOperator().getRawAxis(1) > 0 && !Robot.elevator.elevatorLow()) {
+    	} else if (OI.getOperator().getRawAxis(1) > 0) {
     		Robot.elevator.elevatorDownJoystick(OI.getOperator());
     	} else {
     		Robot.elevator.stopElevator();

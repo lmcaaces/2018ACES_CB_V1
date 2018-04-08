@@ -23,7 +23,7 @@ public class IntakeWithFix extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (!(OI.getOperator().getXButtonPressed())) {
-    		Robot.intake.startIntake(DashboardData.collectcube);
+    		Robot.intake.startIntake(1.0);
     	} else {
     		Robot.intake.fixPositionCube(0.4);
     	}

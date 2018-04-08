@@ -29,50 +29,11 @@ public class Elevator extends Subsystem {
 	private SpeedController elevatorRight = new Spark(4);
 	private SpeedController elevatorLeft = new Spark(5);
 	
-	//Instantiates Elevator Sensors/Switches
-	private DigitalInput lowSensor = new DigitalInput(4);
-	private DigitalInput highSensor = new DigitalInput(5);
-	private DigitalInput switchSensor = new DigitalInput(6);
-	
-	public boolean lowestlevel;
-	public boolean highestlevel;
-	public boolean switchlevel;
-	
 	/**
 	Constructor for Elevator
 	*/
 	public Elevator() {}
 	
-	/**
-	Returns whether or not the elevator is in the lowest position
-	(Intake Position)
-	@return
-	*/
-	public boolean elevatorLow() {
-		// Is the elevator in the lowest level?
-		return !lowSensor.get(); // Return 1 for Yes or 0 for No
-		
-	}
-	
-	/**
-	Returns whether or not the elevator is in the highest position
-	(Scale Position)
-	@return
-	*/
-	public boolean elevatorHigh() {
-		// Is the elevator in the highest level?
-		return !highSensor.get(); // Return 1 for Yes or 0 for No
-	}
-	
-	/**
-	Returns whether or not the elevator is in the middle/switch position
-	(Switch Position)
-	@return
-	*/
-	public boolean elevatorSwitch() {
-		// Is the elevator in the switch level?
-		return !switchSensor.get(); // Return 1 for Yes or 0 for No
-	}
 	
 	/**
 	Moves the elevator lock up or down
@@ -80,7 +41,7 @@ public class Elevator extends Subsystem {
 	@param speed
 	*/
 	public void elevetorLockUpDown(XboxController Xbox) {
-		elevatorLock.set(-0.6*Xbox.getRawAxis(5));
+		elevatorLock.set(DashboardData.intakeAngleSpeed*Xbox.getRawAxis(5));
 	}
 	
 	/**

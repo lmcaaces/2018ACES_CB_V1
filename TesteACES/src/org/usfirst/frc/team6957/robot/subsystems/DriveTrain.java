@@ -24,8 +24,8 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 public class DriveTrain extends Subsystem {
 	
 	//Instantiates Sparks
-	private SpeedController rightDrive = new Spark(0);
-	private SpeedController leftDrive = new Spark(1);
+	private Spark rightDrive = new Spark(0);
+	private Spark leftDrive = new Spark(1);
 	
 	//Instantiates DifferentialDrive
 	public DifferentialDrive drivetrain

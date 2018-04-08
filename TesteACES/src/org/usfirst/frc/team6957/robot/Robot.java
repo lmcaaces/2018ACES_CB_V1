@@ -68,6 +68,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		//autonomousCommand.equals(DashboardData.GetAutoMode());
 		//autonomousCommand.start(); //Starts Autonomous Command
+		AutonomousModes.AutonomousInit();
 	}
 
 	/**
@@ -91,16 +92,11 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
-	
-	
-    	if (OI.getOperator().getRawAxis(1) < 0 && !Robot.elevator.elevatorHigh()) {
-    		Robot.elevator.elevatorUpJoystick(OI.getOperator());
-    	} else if (OI.getOperator().getRawAxis(1) > 0 && !Robot.elevator.elevatorLow()) {
-    		Robot.elevator.elevatorDownJoystick(OI.getOperator());
-    	} else {
-    		Robot.elevator.stopElevator();
-    	}	
-
+		
+		if (OI.driver.getAButtonPressed()) {
+			Robot.drivetrain.resetEncoders();
+		}
+		
 	}
 
 	/**
