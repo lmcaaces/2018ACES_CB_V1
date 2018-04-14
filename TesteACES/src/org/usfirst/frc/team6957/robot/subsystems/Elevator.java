@@ -54,6 +54,10 @@ public class Elevator extends Subsystem {
 		elevatorLeft.set(speed);
 	}
 	
+	public void elevatorLockUp(double speed) {
+		elevatorLock.set(speed);
+	}
+	
 	/**
 	Controls the elevator with Xbox Controller
 	. Take one Parameter: Xbox Controller

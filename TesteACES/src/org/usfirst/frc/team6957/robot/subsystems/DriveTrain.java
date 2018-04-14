@@ -24,11 +24,11 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 public class DriveTrain extends Subsystem {
 	
 	//Instantiates Sparks
-	private Spark rightDrive = new Spark(0);
-	private Spark leftDrive = new Spark(1);
+	public static Spark rightDrive = new Spark(0);
+	public static Spark leftDrive = new Spark(1);
 	
 	//Instantiates DifferentialDrive
-	public DifferentialDrive drivetrain
+	public static DifferentialDrive drivetrain
 			= new DifferentialDrive(leftDrive, rightDrive);
 	
 	//Instantiates Encoders (DriveTrain)

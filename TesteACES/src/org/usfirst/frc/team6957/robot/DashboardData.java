@@ -71,7 +71,6 @@ public class DashboardData {
 	*/
 	public void UniversalDash() {
 		EncoderData();
-		//ElevatorData();
 	}
 	
 	/**
@@ -103,6 +102,7 @@ public class DashboardData {
 		autoSpeed = (prefs.getDouble("Auto Speed", 0.6));
 		autoTurnSpeed = (prefs.getDouble("Auto Turn Speed", 0.6));
 		intakeAngleSpeed = (prefs.getDouble("Intake Angle Speed", 1.0));
+		autoDelay = (prefs.getDouble("Auto Delay", 0));
 	}
 	
 	/**

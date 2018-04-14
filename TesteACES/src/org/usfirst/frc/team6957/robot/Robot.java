@@ -6,17 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team6957.robot;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-
+import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team6957.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6957.robot.subsystems.Elevator;
 import org.usfirst.frc.team6957.robot.subsystems.Intake;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +43,8 @@ public class Robot extends IterativeRobot {
 	
 	public Autonomous Auton = new Autonomous();
 	
+	public Timer autoTimer = new Timer();
+	
 //Main Programs//
 	/**
 	This function is run when the robot is first started up and should be used for any initialization code.
@@ -50,7 +52,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		SD.CheckRobotSettings();
-		CameraServer.getInstance().startAutomaticCapture();
+		NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
 	}
 	
 	@Override
@@ -66,8 +68,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand.equals(DashboardData.GetAutoMode());
-		//autonomousCommand.start(); //Starts Autonomous Command
+		DashboardData.AddAutoMessage("Starting");
 		AutonomousModes.AutonomousInit();
 	}
 
@@ -76,13 +77,22 @@ public class Robot extends IterativeRobot {
 	*/
 	@Override
 	public void autonomousPeriodic() {
-		//Scheduler.getInstance().run();
 		SD.AutonomousDash();
 		AutonomousModes.Autonomous();
+		
+		/*EMERGENCY AUTONOMOUS
+		if (autoTimer.get() < 4) {
+			drivetrain.stopDriveTrain();
+		} else if (autoTimer.get() < 7) {
+			drivetrain.drivetrain.arcadeDrive(0.5, 0);
+		} else {
+			drivetrain.stopDriveTrain();
+		}
+		*/
 	}
-	
 	@Override
 	public void teleopInit() {
+		DashboardData.AddTeleopMessage("Starting");
 	}
 	
 	/**
@@ -93,6 +103,16 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
 		
+		//Elevator Control
+    	if (OI.getOperator().getRawAxis(1) < 0) {
+    		Robot.elevator.elevatorUpJoystick(OI.getOperator());
+    	} else if (OI.getOperator().getRawAxis(1) > 0) {
+    		Robot.elevator.elevatorDownJoystick(OI.getOperator());
+    	} else {
+    		Robot.elevator.stopElevator();
+    	}	
+		
+    	//TEMP Resets Encoders
 		if (OI.driver.getAButtonPressed()) {
 			Robot.drivetrain.resetEncoders();
 		}

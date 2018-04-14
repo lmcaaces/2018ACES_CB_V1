@@ -50,6 +50,7 @@ public class Intake extends Subsystem {
 		intakeLeft.set(speed);
 	}
 	
+	
 	public void intakeAnalog(XboxController Xbox) {
 		intakeRight.set(-Xbox.getRawAxis(2));
 		intakeLeft.set(Xbox.getRawAxis(3));
