@@ -110,7 +110,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SD.TeleopDash();
-		
+		//Merged
 		//Elevator Control
     	if (OI.getOperator().getRawAxis(1) < 0) {
     		Robot.elevator.elevatorUpJoystick(OI.getOperator());
