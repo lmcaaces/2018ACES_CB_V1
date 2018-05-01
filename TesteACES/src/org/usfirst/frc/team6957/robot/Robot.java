@@ -9,11 +9,8 @@ package org.usfirst.frc.team6957.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
-
-import javax.print.attribute.standard.Compression;
 
 import org.usfirst.frc.team6957.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6957.robot.subsystems.Elevator;
@@ -48,10 +45,6 @@ public class Robot extends IterativeRobot {
 	
 	public Timer autoTimer = new Timer();
 	
-	public static DoubleSolenoid RampDrop = new DoubleSolenoid(0,1);
-	
-	public static edu.wpi.first.wpilibj.Compressor Compressor = new edu.wpi.first.wpilibj.Compressor();
-	
 //Main Programs//
 	/**
 	This function is run when the robot is first started up and should be used for any initialization code.
@@ -60,8 +53,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		SD.CheckRobotSettings();
 		NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
-		RampDrop.set(DoubleSolenoid.Value.kForward);
-		Compressor.start();
 	}
 	
 	@Override
@@ -124,10 +115,6 @@ public class Robot extends IterativeRobot {
     	//TEMP Resets Encoders
 		if (OI.driver.getAButtonPressed()) {
 			Robot.drivetrain.resetEncoders();
-		}
-		
-		if (OI.getOperator().getXButtonPressed()) {
-			RampDrop.set(DoubleSolenoid.Value.kReverse);
 		}
 		
 	}
