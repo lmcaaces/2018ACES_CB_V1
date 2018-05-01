@@ -10,7 +10,7 @@ public class AutonomousModes {
 	private static String mode = DashboardData.autoMode;
 	private static boolean enc = DashboardData.autoType;
 	private static double delay = DashboardData.autoDelay;
-	private static double speed = DashboardData.autoSpeed;
+	private static double speed = -1.0;
 	private static double turnspeed = DashboardData.autoTurnSpeed;
 	private static double turn1 = DashboardData.turn1;
 	private static double turn2 = DashboardData.turn2;
@@ -71,56 +71,56 @@ public class AutonomousModes {
 				Default();
 			case 'D': //Default
 				if (enc) {
-					EncDefault(); //With Encoders
+					//EncDefault(); //With Encoders
 				} else {
 					Default(); //Time based
 				}
 				break;
 			case 'L': //Left
 				if (enc) {
-					EncLeft(); //With Encoders
+					//EncLeft(); //With Encoders
 				} else {
 					Left(); //Time based
 				}
 				break;
 			case 'C': //Center
 				if (enc) {
-					EncCenter(); //With Encoders
+					//EncCenter(); //With Encoders
 				} else {
 					Center(); //Time based
 				}
 				break;
 			case 'R': //Right
 				if (enc) {
-					EncRight(); //With Encoders
+					//EncRight(); //With Encoders
 				} else {
 					Right(); //Time based
 				}
 				break;
 			case 'd': //Default
 				if (enc) {
-					EncDefault(); //With Encoders
+					//EncDefault(); //With Encoders
 				} else {
 					Default(); //Time based
 				}
 				break;
 			case 'l': //Left
 				if (enc) {
-					EncLeft(); //With Encoders
+					//EncLeft(); //With Encoders
 				} else {
 					Left(); //Time based
 				}
 				break;
 			case 'c': //Center
 				if (enc) {
-					EncCenter(); //With Encoders
+					//EncCenter(); //With Encoders
 				} else {
 					Center(); //Time based
 				}
 				break;
 			case 'r': //Right
 				if (enc) {
-					EncRight(); //With Encoders
+					//EncRight(); //With Encoders
 				} else {
 					Right(); //Time based
 				}
@@ -140,8 +140,8 @@ public class AutonomousModes {
 			} else {
 				Robot.elevator.elevatorUpDown(0);
 			}
-		} else if (ADT.get() < delay + 0.8) {
-			DriveTrain.drivetrain.arcadeDrive(1.0, 0);
+		} else if (ADT.get() < delay + 0.5) {
+			DriveTrain.drivetrain.arcadeDrive(speed, 0);
 			if (ADT.get() < 1) {
 				Robot.elevator.elevatorUpDown(-1.0);
 			} else {
@@ -165,38 +165,38 @@ public class AutonomousModes {
 			if (ADT.get() < delay) {
 				DriveTrain.drivetrain.stopMotor();
 				Robot.intake.startIntake(0.4);
-				if (ADT.get() < time3) {
+				if (ADT.get() < 3) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + time1) {
-				DriveTrain.drivetrain.arcadeDrive(speed, 0);
+			} else if (ADT.get() < delay + 1.35) {
+				DriveTrain.drivetrain.arcadeDrive(-1, 0);
 				Robot.intake.startIntake(0.4);
-				if (ADT.get() < time3) {
+				if (ADT.get() < 3) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + time1 + turn1) {
-				DriveTrain.drivetrain.arcadeDrive(0, turnspeed);
+			} else if (ADT.get() < delay + 1.35 + 1.4) {
+				DriveTrain.drivetrain.arcadeDrive(0, 0.7);
 				Robot.intake.startIntake(0.4);
-				if (ADT.get() < time3) {
+				if (ADT.get() < 3) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + time1 + turn1 + time2) {
-				DriveTrain.drivetrain.arcadeDrive(speed, 0);
+			} else if (ADT.get() < delay + 1.35 + 1.4 + 0.18) {
+				DriveTrain.drivetrain.arcadeDrive(-1, 0);
 				Robot.intake.startIntake(0.4);
-				if (ADT.get() < time3) {
+				if (ADT.get() < 3) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
 			} else {
 				DriveTrain.drivetrain.stopMotor();
-				if (ADT.get() < time3) {
+				if (ADT.get() < 3) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
@@ -219,22 +219,22 @@ public class AutonomousModes {
 			if (ADT.get() < delay) {
 				DriveTrain.drivetrain.stopMotor();
 				Robot.intake.startIntake(0.4);
-				if (ADT.get() < time3) {
+				if (ADT.get() < 1) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + time1) {
-				DriveTrain.drivetrain.arcadeDrive(speed, 0);
+			} else if (ADT.get() < delay + 0.5) {
+				DriveTrain.drivetrain.arcadeDrive(-1.0, 0);
 				Robot.intake.startIntake(0.4);
-				if (ADT.get() < time3) {
+				if (ADT.get() < 1) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
 			} else {
 				DriveTrain.drivetrain.stopMotor();
-				if (ADT.get() < time3) {
+				if (ADT.get() < 1) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
@@ -409,7 +409,7 @@ public class AutonomousModes {
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + 0.8) {
+			} else if (ADT.get() < delay + 0.5) {
 				DriveTrain.drivetrain.arcadeDrive(-1, 0);
 				Robot.intake.startIntake(0.2);
 				if (ADT.get() < 1) {
@@ -435,7 +435,7 @@ public class AutonomousModes {
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + 1.55) {
+			} else if (ADT.get() < delay + 1.3) {
 				DriveTrain.drivetrain.arcadeDrive(-1.0, 0);
 				Robot.intake.startIntake(0.2);
 				if (ADT.get() < 3) {
@@ -443,14 +443,14 @@ public class AutonomousModes {
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + 1.55 + 1.25) {
+			} else if (ADT.get() < delay + 1.3 + 1.4) {
 				DriveTrain.drivetrain.arcadeDrive(0, -0.7);
 				if (ADT.get() < 3) {
 					Robot.elevator.elevatorUpDown(-1.0);
 				} else {
 					Robot.elevator.elevatorUpDown(0);
 				}
-			} else if (ADT.get() < delay + 1.55 + 1.25 + 0.19) {
+			} else if (ADT.get() < delay + 1.3 + 1.4 + 0.18) {
 				DriveTrain.drivetrain.arcadeDrive(-1.0, 0);
 				Robot.intake.startIntake(0.2);
 				if (ADT.get() < 3) {
@@ -485,9 +485,11 @@ public class AutonomousModes {
 		}
 	}
 	
+	
+	/*
 	/**
 	Default autonomous (encoder based)
-	*/
+	*//*
 	private static void EncDefault() {
 		if (stage == 1) {
 			if (ADT.get() >= delay) {
@@ -532,7 +534,7 @@ public class AutonomousModes {
 	
 	/**
 	Left autonomous (encoder based)
-	*/
+	*//*
 	private static void EncLeft() {
 		if (switchLoc == 'L') { //If switch is on left side
 			if (stage == 1) {
@@ -619,7 +621,7 @@ public class AutonomousModes {
 	
 	/**
 	Center autonomous (encoder based)
-	*/
+	*//*
 	private static void EncCenter() {
 		if (switchLoc == 'L') { //If switch is on left side
 			if (stage == 1) {
@@ -727,7 +729,7 @@ public class AutonomousModes {
 	
 	/**
 	Right autonomous (encoder based)
-	*/
+	*//*
 	private static void EncRight() {
 		if (switchLoc == 'L') { //If switch is on left side
 			if (stage == 1) {
@@ -811,5 +813,5 @@ public class AutonomousModes {
 			DriveTrain.drivetrain.stopMotor();
 		}
 	}
-	
+	*/
 }

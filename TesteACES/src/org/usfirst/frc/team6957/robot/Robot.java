@@ -6,9 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team6957.robot;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -35,6 +34,9 @@ public class Robot extends IterativeRobot {
 	/**Intake Subsystem*/
 	public static Intake intake = new Intake();
 	
+	public static DoubleSolenoid RampDrop = new DoubleSolenoid(0, 1);
+	public static Timer RampDropTimer = new Timer();
+	
 	//Instantiates the OI, SmartDashboard-SD (DashboardData class), and Autonomous Command
 	/**Operator Input*/
 	public static OI oi = new OI();
@@ -52,7 +54,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		SD.CheckRobotSettings();
+		NetworkTableInstance.getDefault().getTable("limelight");
+		
+		
 		NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+		RampDrop.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	@Override
@@ -93,6 +99,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		DashboardData.AddTeleopMessage("Starting");
+		RampDropTimer.reset();
+		RampDropTimer.start();
 	}
 	
 	/**
@@ -112,11 +120,15 @@ public class Robot extends IterativeRobot {
     		Robot.elevator.stopElevator();
     	}	
 		
-    	//TEMP Resets Encoders
-		if (OI.driver.getAButtonPressed()) {
-			Robot.drivetrain.resetEncoders();
-		}
-		
+    	//Ramp Drop Control
+    	if (OI.getOperator().getYButtonPressed()/* && RampDropTimer.get() >= 105*/) {
+    		RampDrop.set(DoubleSolenoid.Value.kReverse);
+    	}
+    	
+    	if (OI.getOperator().getBButtonPressed()) {
+    		RampDrop.set(DoubleSolenoid.Value.kForward);
+    	}
+    	
 	}
 
 	/**
